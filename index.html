@@ -526,18 +526,63 @@
         </div>
     </footer>
     
-    <div class="fixed bottom-6 right-6 z-30 lg:hidden flex flex-col gap-3 items-center">
-        <div class="floating-btn">
-            <a href="https://wa.me/41772355060?text=Guten%20Tag%20Belky%2C%20ich%20m%C3%B6chte%20gerne%20einen%20Termin%20bei%20Ihnen%20anfragen.%20Vielen%20Dank%21" target="_blank" class="w-14 h-14 rounded-full flex items-center justify-center shadow-2xl" style="background: #25D366;" aria-label="WhatsApp">
-                <span class="iconify text-white text-2xl" data-icon="ph:whatsapp-logo-fill" aria-hidden="true"></span>
-            </a>
+    <!-- Speed-Dial Floating Button -->
+    <div id="speedDial" class="fixed bottom-6 right-6 z-30 lg:hidden flex flex-col items-end gap-3">
+        <!-- Options (hidden by default) -->
+        <div id="speedDialOptions" class="flex flex-col items-end gap-3" style="opacity:0; pointer-events:none; transform: translateY(10px); transition: opacity 0.25s ease, transform 0.25s ease;">
+            <div class="flex items-center gap-3">
+                <span class="bg-white text-bronze-800 text-xs font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap">Termin buchen</span>
+                <a href="https://koalendar.com/e/treffen-sie-belky" target="_blank" class="btn-gold w-13 h-13 rounded-full flex items-center justify-center shadow-xl border border-gold-300/30" style="width:52px;height:52px;" aria-label="Termin buchen">
+                    <span class="iconify text-white text-xl" data-icon="ph:calendar-plus-fill" aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="bg-white text-bronze-800 text-xs font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap">WhatsApp</span>
+                <a href="https://wa.me/41772355060?text=Guten%20Tag%20Belky%2C%20ich%20m%C3%B6chte%20gerne%20einen%20Termin%20bei%20Ihnen%20anfragen.%20Vielen%20Dank%21" target="_blank" class="w-13 h-13 rounded-full flex items-center justify-center shadow-xl" style="width:52px;height:52px;background:#25D366;" aria-label="WhatsApp">
+                    <span class="iconify text-white text-xl" data-icon="ph:whatsapp-logo-fill" aria-hidden="true"></span>
+                </a>
+            </div>
         </div>
-        <div class="floating-btn" style="animation-delay: 0.3s;">
-            <a href="https://koalendar.com/e/treffen-sie-belky" target="_blank" class="btn-gold w-14 h-14 rounded-full flex items-center justify-center shadow-2xl border border-gold-300/30" aria-label="Termin buchen">
-                <span class="iconify text-white text-2xl" data-icon="ph:calendar-plus-fill" aria-hidden="true"></span>
-            </a>
-        </div>
+        <!-- Main toggle button -->
+        <button id="speedDialBtn" onclick="toggleSpeedDial()" class="btn-gold w-14 h-14 rounded-full flex items-center justify-center shadow-2xl border border-gold-300/30 floating-btn" aria-label="Kontakt" aria-expanded="false">
+            <span id="speedDialIcon" class="iconify text-white text-2xl transition-transform duration-300" data-icon="ph:chat-circle-dots-fill" aria-hidden="true"></span>
+        </button>
     </div>
+    <script>
+        function toggleSpeedDial() {
+            const options = document.getElementById('speedDialOptions');
+            const btn = document.getElementById('speedDialBtn');
+            const icon = document.getElementById('speedDialIcon');
+            const isOpen = options.style.opacity === '1';
+            if (isOpen) {
+                options.style.opacity = '0';
+                options.style.pointerEvents = 'none';
+                options.style.transform = 'translateY(10px)';
+                btn.setAttribute('aria-expanded', 'false');
+                icon.setAttribute('data-icon', 'ph:chat-circle-dots-fill');
+            } else {
+                options.style.opacity = '1';
+                options.style.pointerEvents = 'auto';
+                options.style.transform = 'translateY(0)';
+                btn.setAttribute('aria-expanded', 'true');
+                icon.setAttribute('data-icon', 'ph:x-bold');
+            }
+        }
+        // Close on outside click
+        document.addEventListener('click', function(e) {
+            const dial = document.getElementById('speedDial');
+            if (dial && !dial.contains(e.target)) {
+                const options = document.getElementById('speedDialOptions');
+                const btn = document.getElementById('speedDialBtn');
+                const icon = document.getElementById('speedDialIcon');
+                options.style.opacity = '0';
+                options.style.pointerEvents = 'none';
+                options.style.transform = 'translateY(10px)';
+                btn.setAttribute('aria-expanded', 'false');
+                icon.setAttribute('data-icon', 'ph:chat-circle-dots-fill');
+            }
+        });
+    </script>
     
     <div id="serviceModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(30, 22, 13, 0.6); backdrop-filter: blur(8px);" role="dialog" aria-modal="true">
         <div class="modal-content bg-white rounded-2xl w-full max-w-md max-h-[85vh] overflow-y-auto shadow-2xl border border-gold-500/20">
