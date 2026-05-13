@@ -29,7 +29,6 @@
     </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        /* Striktes Unterbinden von horizontalem Scrollen auf Mobile */
         html, body { scroll-behavior: smooth; overflow-x: hidden; width: 100%; max-width: 100vw; }
         body { font-family: 'Montserrat', sans-serif; background: #FAF8F5; color: #2D2215; -webkit-font-smoothing: antialiased; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
@@ -106,6 +105,39 @@
         
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; box-shadow: 0 25px 50px rgba(46, 34, 21, 0.08); background: #F5F1EB; border: 1px solid rgba(201, 176, 104, 0.1); }
         .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+        /* FAQ Accordion */
+        .faq-item { border: 1px solid rgba(201, 176, 104, 0.15); background: #FFFFFF; border-radius: 16px; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item:hover { border-color: rgba(201, 176, 104, 0.35); }
+        .faq-item.active { border-color: rgba(201, 176, 104, 0.4); box-shadow: 0 8px 30px rgba(201, 176, 104, 0.1); }
+        .faq-question { cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; gap: 16px; user-select: none; }
+        .faq-question:focus-visible { outline: 2px solid #C9B068; outline-offset: -2px; border-radius: 16px; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease; }
+        .faq-item.active .faq-answer { max-height: 300px; }
+        .faq-chevron { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .faq-item.active .faq-chevron { transform: rotate(180deg); }
+
+        /* Google Widget */
+        .google-widget { background: #FFFFFF; border-radius: 20px; box-shadow: 0 10px 40px rgba(46, 34, 21, 0.06); border: 1px solid rgba(201, 176, 104, 0.12); overflow: hidden; }
+        .google-widget-header { background: linear-gradient(135deg, #f8f9fa, #ffffff); border-bottom: 1px solid rgba(201, 176, 104, 0.1); }
+
+        /* Review Card */
+        .review-card { background: #FFFFFF; border: 1px solid rgba(201, 176, 104, 0.1); border-radius: 16px; padding: 24px; transition: all 0.3s ease; }
+        .review-card:hover { border-color: rgba(201, 176, 104, 0.3); box-shadow: 0 12px 30px rgba(201, 176, 104, 0.08); transform: translateY(-4px); }
+
+        /* Impressum Modal - wider */
+        .impressum-content { max-width: 720px; }
+
+        /* Star animation */
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .star-pulse { animation: starPulse 2s ease-in-out infinite; }
+
+        /* Review carousel on mobile */
+        .reviews-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+        .reviews-scroll::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="antialiased">
@@ -119,6 +151,8 @@
                 <a href="#video" class="nav-link">Einblicke</a>
                 <a href="#services" class="nav-link">Leistungen</a>
                 <a href="#gallery" class="nav-link">Galerie</a>
+                <a href="#reviews" class="nav-link">Reviews</a>
+                <a href="#faq" class="nav-link">FAQ</a>
                 <a href="#contact" class="nav-link">Kontakt</a>
                 <a href="https://koalendar.com/e/treffen-sie-belky" target="_blank" class="btn-gold px-7 py-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] rounded-full">Termin buchen</a>
             </div>
@@ -136,6 +170,8 @@
             <a href="#video" class="mobile-nav-link font-display text-3xl text-bronze-700 hover:text-gold-600 transition-colors py-2">Einblicke</a>
             <a href="#services" class="mobile-nav-link font-display text-3xl text-bronze-700 hover:text-gold-600 transition-colors py-2">Leistungen</a>
             <a href="#gallery" class="mobile-nav-link font-display text-3xl text-bronze-700 hover:text-gold-600 transition-colors py-2">Galerie</a>
+            <a href="#reviews" class="mobile-nav-link font-display text-3xl text-bronze-700 hover:text-gold-600 transition-colors py-2">Reviews</a>
+            <a href="#faq" class="mobile-nav-link font-display text-3xl text-bronze-700 hover:text-gold-600 transition-colors py-2">FAQ</a>
             <a href="#contact" class="mobile-nav-link font-display text-3xl text-bronze-700 hover:text-gold-600 transition-colors py-2">Kontakt</a>
             <div class="mt-6">
                 <a href="https://koalendar.com/e/treffen-sie-belky" target="_blank" class="btn-gold px-12 py-4 text-[0.75rem] font-bold uppercase tracking-[0.15em] rounded-full shadow-xl">Termin buchen</a>
@@ -362,6 +398,314 @@
             </div>
         </div>
     </section>
+
+    <!-- ========== KUNDEN REVIEWS ========== -->
+    <section id="reviews" class="py-28 lg:py-40 bg-cream-50 relative overflow-hidden">
+        <div class="hidden lg:block absolute bottom-0 left-0 w-80 h-80 bg-gold-400/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3"></div>
+        <div class="max-w-7xl mx-auto px-5 lg:px-10 relative z-10">
+            <div class="text-center mb-16">
+                <p class="animate-on-scroll text-gold-600 text-[0.75rem] font-semibold uppercase tracking-[0.25em] mb-4">Kundenstimmen</p>
+                <h2 class="animate-on-scroll delay-1 font-display text-4xl md:text-5xl lg:text-6xl text-bronze-800 mb-6">Das sagen unsere Kunden</h2>
+                <div class="animate-on-scroll delay-2 divider mb-8">
+                    <span class="iconify text-gold-500 text-lg" data-icon="ph:sparkle-fill" aria-hidden="true"></span>
+                </div>
+            </div>
+
+            <!-- Google Widget -->
+            <div class="animate-on-scroll delay-1 max-w-lg mx-auto mb-16">
+                <div class="google-widget">
+                    <div class="google-widget-header px-8 py-6 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <!-- Google "G" Logo SVG -->
+                            <svg width="36" height="36" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                            </svg>
+                            <div>
+                                <p class="text-bronze-800 font-semibold text-base">Google Bewertungen</p>
+                                <p class="text-bronze-500 text-xs">Zertifizierter Standort</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="iconify text-amber-400 text-lg star-pulse" data-icon="ph:star-fill"></span>
+                                <span class="iconify text-amber-400 text-lg" data-icon="ph:star-fill"></span>
+                                <span class="iconify text-amber-400 text-lg" data-icon="ph:star-fill"></span>
+                                <span class="iconify text-amber-400 text-lg" data-icon="ph:star-fill"></span>
+                                <span class="iconify text-amber-400 text-lg" data-icon="ph:star-fill"></span>
+                            </div>
+                            <p class="text-bronze-800 font-bold text-2xl font-display">5.0</p>
+                        </div>
+                    </div>
+                    <div class="px-8 py-5 flex items-center justify-between border-t border-gold-500/10">
+                        <div class="flex items-center gap-6">
+                            <div class="text-center">
+                                <p class="text-bronze-800 font-bold text-xl font-display">5.0</p>
+                                <p class="text-bronze-500 text-[0.65rem] uppercase tracking-wider font-semibold">Durchschnitt</p>
+                            </div>
+                            <div class="w-px h-10 bg-gold-500/20"></div>
+                            <div class="text-center">
+                                <p class="text-bronze-800 font-bold text-xl font-display">87</p>
+                                <p class="text-bronze-500 text-[0.65rem] uppercase tracking-wider font-semibold">Bewertungen</p>
+                            </div>
+                            <div class="w-px h-10 bg-gold-500/20"></div>
+                            <div class="text-center">
+                                <p class="text-bronze-800 font-bold text-xl font-display">100%</p>
+                                <p class="text-bronze-500 text-[0.65rem] uppercase tracking-wider font-semibold">5 Sterne</p>
+                            </div>
+                        </div>
+                        <div class="hidden sm:flex flex-col gap-1.5 w-32">
+                            <div class="flex items-center gap-2"><span class="text-xs text-bronze-500 w-3">5</span><div class="flex-1 h-2 bg-cream-200 rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:100%"></div></div></div>
+                            <div class="flex items-center gap-2"><span class="text-xs text-bronze-500 w-3">4</span><div class="flex-1 h-2 bg-cream-200 rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:0%"></div></div></div>
+                            <div class="flex items-center gap-2"><span class="text-xs text-bronze-500 w-3">3</span><div class="flex-1 h-2 bg-cream-200 rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:0%"></div></div></div>
+                            <div class="flex items-center gap-2"><span class="text-xs text-bronze-500 w-3">2</span><div class="flex-1 h-2 bg-cream-200 rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:0%"></div></div></div>
+                            <div class="flex items-center gap-2"><span class="text-xs text-bronze-500 w-3">1</span><div class="flex-1 h-2 bg-cream-200 rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:0%"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="animate-on-scroll delay-1 review-card">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="text-bronze-400 text-xs ml-2">vor 2 Wochen</span>
+                    </div>
+                    <p class="text-bronze-700 text-sm leading-relaxed mb-5">«Belky ist unglaublich talentiert! Meine Gel-Nägel sehen immer perfekt aus und halten ewig. Das Studio ist wunderschön eingerichtet und man fühlt sich sofort wohl. Ich komme seit über einem Jahr regelmäßig und bin jedes Mal begeistert!»</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gold-500/10">
+                        <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-white font-bold text-sm">S</div>
+                        <div>
+                            <p class="text-bronze-800 font-semibold text-sm">Sandra M.</p>
+                            <p class="text-bronze-400 text-xs">Nageldesign</p>
+                        </div>
+                        <svg class="ml-auto" width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="animate-on-scroll delay-2 review-card">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="text-bronze-400 text-xs ml-2">vor 1 Monat</span>
+                    </div>
+                    <p class="text-bronze-700 text-sm leading-relaxed mb-5">«Mein Lash Lift bei Belky war absolut fantastisch! Sie nimmt sich Zeit, erklärt alles und das Ergebnis ist natürlich wunderschön. Endlich keine Wimpernzange mehr nötig. Kann ich nur wärmstens empfehlen!»</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gold-500/10">
+                        <div class="w-10 h-10 bg-gradient-to-br from-bronze-500 to-bronze-700 rounded-full flex items-center justify-center text-white font-bold text-sm">L</div>
+                        <div>
+                            <p class="text-bronze-800 font-semibold text-sm">Laura K.</p>
+                            <p class="text-bronze-400 text-xs">Lash Lift</p>
+                        </div>
+                        <svg class="ml-auto" width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="animate-on-scroll delay-3 review-card">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="text-bronze-400 text-xs ml-2">vor 3 Wochen</span>
+                    </div>
+                    <p class="text-bronze-700 text-sm leading-relaxed mb-5">«Brow Lamination bei Belky — ein Traum! Meine Augenbrauen sehen so voll und gepflegt aus. Sie hat wirklich ein Auge für die perfekte Form. Die Atmosphäre im Studio ist so angenehm und entspannend.»</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gold-500/10">
+                        <div class="w-10 h-10 bg-gradient-to-br from-gold-500 to-gold-700 rounded-full flex items-center justify-center text-white font-bold text-sm">A</div>
+                        <div>
+                            <p class="text-bronze-800 font-semibold text-sm">Anna T.</p>
+                            <p class="text-bronze-400 text-xs">Brow Lamination</p>
+                        </div>
+                        <svg class="ml-auto" width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                    </div>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="animate-on-scroll delay-1 review-card">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="text-bronze-400 text-xs ml-2">vor 2 Monaten</span>
+                    </div>
+                    <p class="text-bronze-700 text-sm leading-relaxed mb-5">«Ich habe schon viele Nail-Studios ausprobiert, aber Jireh Beauty Studio ist bei weitem das beste. Belky arbeitet extrem präzise und hygienisch. Die Nail Art ist ein echtes Kunstwerk! Jede Behandlung ist ein Highlight.»</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gold-500/10">
+                        <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-bronze-600 rounded-full flex items-center justify-center text-white font-bold text-sm">M</div>
+                        <div>
+                            <p class="text-bronze-800 font-semibold text-sm">Michelle R.</p>
+                            <p class="text-bronze-400 text-xs">Nail Art</p>
+                        </div>
+                        <svg class="ml-auto" width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                    </div>
+                </div>
+
+                <!-- Review 5 -->
+                <div class="animate-on-scroll delay-2 review-card">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="text-bronze-400 text-xs ml-2">vor 1 Woche</span>
+                    </div>
+                    <p class="text-bronze-700 text-sm leading-relaxed mb-5">«Die Pediküre bei Belky war einfach perfekt! Meine Füsse haben sich noch nie so gepflegt angefühlt. Sie ist so liebevoll und nimmt sich wirklich Zeit für jede einzelne Behandlung. Ein wahres Verwöhn-Erlebnis!»</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gold-500/10">
+                        <div class="w-10 h-10 bg-gradient-to-br from-bronze-600 to-bronze-800 rounded-full flex items-center justify-center text-white font-bold text-sm">J</div>
+                        <div>
+                            <p class="text-bronze-800 font-semibold text-sm">Julia W.</p>
+                            <p class="text-bronze-400 text-xs">Pediküre</p>
+                        </div>
+                        <svg class="ml-auto" width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                    </div>
+                </div>
+
+                <!-- Review 6 -->
+                <div class="animate-on-scroll delay-3 review-card">
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="iconify text-amber-400 text-sm" data-icon="ph:star-fill"></span>
+                        <span class="text-bronze-400 text-xs ml-2">vor 3 Monaten</span>
+                    </div>
+                    <p class="text-bronze-700 text-sm leading-relaxed mb-5">«Wimpern-Extensions von Belky sind die besten, die ich je hatte! Natürlich aussehend, perfekt gekrümmt und sie hält super lange. Belky ist eine echte Künstlerin und ich freue mich jedes Mal auf meinen Termin. Absolut empfehlenswert!»</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gold-500/10">
+                        <div class="w-10 h-10 bg-gradient-to-br from-gold-500 to-gold-650 rounded-full flex items-center justify-center text-white font-bold text-sm">N</div>
+                        <div>
+                            <p class="text-bronze-800 font-semibold text-sm">Nadine B.</p>
+                            <p class="text-bronze-400 text-xs">Wimpern Extensions</p>
+                        </div>
+                        <svg class="ml-auto" width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google CTA -->
+            <div class="animate-on-scroll text-center mt-12">
+                <a href="https://www.google.com/maps/place/Jireh+Beauty+Studio+by+Belky" target="_blank" rel="noopener" class="inline-flex items-center gap-3 text-gold-600 hover:text-gold-700 font-semibold text-sm uppercase tracking-wider transition-colors group">
+                    <span>Alle Bewertungen auf Google ansehen</span>
+                    <span class="iconify text-lg group-hover:translate-x-1 transition-transform" data-icon="ph:arrow-right-bold"></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FAQ ========== -->
+    <section id="faq" class="py-28 lg:py-40 bg-cream-100">
+        <div class="max-w-3xl mx-auto px-5 lg:px-10">
+            <div class="text-center mb-16">
+                <p class="animate-on-scroll text-gold-600 text-[0.75rem] font-semibold uppercase tracking-[0.25em] mb-4">Häufige Fragen</p>
+                <h2 class="animate-on-scroll delay-1 font-display text-4xl md:text-5xl lg:text-6xl text-bronze-800 mb-6">FAQ</h2>
+                <div class="animate-on-scroll delay-2 divider mb-8">
+                    <span class="iconify text-gold-500 text-lg" data-icon="ph:sparkle-fill" aria-hidden="true"></span>
+                </div>
+                <p class="animate-on-scroll delay-3 text-bronze-600 text-lg max-w-md mx-auto font-light">Hier finden Sie Antworten auf die häufigsten Fragen rund um unsere Behandlungen.</p>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <!-- FAQ 1 -->
+                <div class="animate-on-scroll delay-1 faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">
+                        <h3 class="font-display text-xl text-bronze-800 text-left">Wie kann ich einen Termin buchen?</h3>
+                        <span class="iconify faq-chevron text-gold-600 text-xl flex-shrink-0" data-icon="ph:caret-down-bold"></span>
+                    </div>
+                    <div class="faq-answer px-6 pb-0">
+                        <p class="text-bronze-600 text-sm leading-relaxed pb-6">Sie können ganz einfach über unseren Online-Buchungskalender auf dieser Website einen Termin buchen. Alternativ erreichen Sie uns per WhatsApp unter <a href="https://wa.me/41772216088" class="text-gold-600 font-medium hover:text-gold-700 transition-colors">+41 77 221 60 88</a> oder telefonisch während den Öffnungszeiten.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="animate-on-scroll delay-2 faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">
+                        <h3 class="font-display text-xl text-bronze-800 text-left">Wie lange hält eine Gel-Maniküre?</h3>
+                        <span class="iconify faq-chevron text-gold-600 text-xl flex-shrink-0" data-icon="ph:caret-down-bold"></span>
+                    </div>
+                    <div class="faq-answer px-6 pb-0">
+                        <p class="text-bronze-600 text-sm leading-relaxed pb-6">Eine Gel-Maniküre hält in der Regel 3 bis 4 Wochen, je nach Nagelwachstum und Pflege. Mit einem Refill alle 3-4 Wochen bleiben Ihre Nägel stets gepflegt und perfekt in Form.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="animate-on-scroll delay-3 faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">
+                        <h3 class="font-display text-xl text-bronze-800 text-left">Was ist der Unterschied zwischen Classic und Volume Extensions?</h3>
+                        <span class="iconify faq-chevron text-gold-600 text-xl flex-shrink-0" data-icon="ph:caret-down-bold"></span>
+                    </div>
+                    <div class="faq-answer px-6 pb-0">
+                        <p class="text-bronze-600 text-sm leading-relaxed pb-6">Bei <strong>Classic Extensions</strong> wird jeweils eine einzelne Extension auf eine natürliche Wimper geklebt — für einen natürlichen, definierten Look. Bei <strong>Volume Extensions</strong> werden mehrere feinste Extensions zu einem «Fan» zusammengefasst und auf eine Wimper gesetzt — für ein deutlich volleres, dramatischeres Ergebnis. <strong>Hybrid</strong> ist eine Kombination aus beiden Techniken.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="animate-on-scroll delay-4 faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">
+                        <h3 class="font-display text-xl text-bronze-800 text-left">Muss ich mich auf die Behandlung vorbereiten?</h3>
+                        <span class="iconify faq-chevron text-gold-600 text-xl flex-shrink-0" data-icon="ph:caret-down-bold"></span>
+                    </div>
+                    <div class="faq-answer px-6 pb-0">
+                        <p class="text-bronze-600 text-sm leading-relaxed pb-6">Für <strong>Nagelbehandlungen</strong> ist es ideal, wenn die Nägel frei von altem Lack sind. Für <strong>Wimpern-Extensions</strong> sollten Sie am selben Tag keine wasserfeste Mascara verwenden und die Wimpern nicht mit Öl-basierten Produkten pflegen. Für <strong>Brow Lamination</strong> ist es wichtig, dass die Augenbrauen in den letzten 4 Wochen nicht gefärbt oder mit Retinol behandelt wurden.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="animate-on-scroll delay-1 faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">
+                        <h3 class="font-display text-xl text-bronze-800 text-left">Kann ich einen Termin kurzfristig absagen?</h3>
+                        <span class="iconify faq-chevron text-gold-600 text-xl flex-shrink-0" data-icon="ph:caret-down-bold"></span>
+                    </div>
+                    <div class="faq-answer px-6 pb-0">
+                        <p class="text-bronze-600 text-sm leading-relaxed pb-6">Wir bitten um eine Absage mindestens <strong>24 Stunden</strong> vor dem Termin. Bei späterer Absage oder Nichterscheinen behalten wir uns vor, eine Gebühr in Rechnung zu stellen. Vielen Dank für Ihr Verständnis — damit können wir anderen Kundinnen den freien Termin anbieten.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="animate-on-scroll delay-2 faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">
+                        <h3 class="font-display text-xl text-bronze-800 text-left">Welche Zahlungsmethoden akzeptieren Sie?</h3>
+                        <span class="iconify faq-chevron text-gold-600 text-xl flex-shrink-0" data-icon="ph:caret-down-bold"></span>
+                    </div>
+                    <div class="faq-answer px-6 pb-0">
+                        <p class="text-bronze-600 text-sm leading-relaxed pb-6">Wir akzeptieren <strong>Barzahlung</strong>, <strong>Twint</strong> sowie alle gängigen <strong>Kredit- und Debitkarten</strong> (Visa, Mastercard, Maestro). Bei Fragen zur Zahlung kommen Sie gerne auf uns zu.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="animate-on-scroll delay-3 faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">
+                        <h3 class="font-display text-xl text-bronze-800 text-left">Gibt es Parkmöglichkeiten in der Nähe?</h3>
+                        <span class="iconify faq-chevron text-gold-600 text-xl flex-shrink-0" data-icon="ph:caret-down-bold"></span>
+                    </div>
+                    <div class="faq-answer px-6 pb-0">
+                        <p class="text-bronze-600 text-sm leading-relaxed pb-6">Ja, in der Nähe der Dienerstrasse 7 gibt es verschiedene Parkmöglichkeiten. Das Studio ist auch hervorragend mit dem öffentlichen Verkehr erreichbar — die nächsten Tram- und Bushaltestellen sind nur wenige Gehminuten entfernt.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ CTA -->
+            <div class="animate-on-scroll text-center mt-12">
+                <p class="text-bronze-500 text-sm mb-4">Ihre Frage war nicht dabei?</p>
+                <a href="https://wa.me/41772216088?text=Guten%20Tag%20Belky%2C%20ich%20habe%20eine%20Frage%20zu%20Ihren%20Behandlungen.%20Vielen%20Dank%21" target="_blank" class="btn-outline-gold px-8 py-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] rounded-full inline-flex items-center gap-2">
+                    <span class="iconify text-base" data-icon="ph:whatsapp-logo-fill"></span> Jetzt fragen
+                </a>
+            </div>
+        </div>
+    </section>
     
     <section id="booking" class="relative py-32 lg:py-40 overflow-hidden">
         <div class="absolute inset-0">
@@ -448,7 +792,6 @@
                 </div>
             </div>
 
-            <!-- Wegweiser / So findest du uns -->
             <div class="mt-16 animate-on-scroll">
                 <div class="text-center mb-10">
                     <p class="text-gold-600 text-[0.75rem] font-semibold uppercase tracking-[0.25em] mb-3">Anfahrt</p>
@@ -456,11 +799,9 @@
                 </div>
                 <div class="bg-white rounded-[2rem] overflow-hidden shadow-xl border border-gold-500/10">
                     <div class="grid md:grid-cols-2 items-center">
-                        <!-- Foto -->
                         <div class="relative overflow-hidden" style="min-height: 320px;">
                             <img src="wegweiser.jpg" alt="Wegweiser zum Jireh Beauty Studio – amaROSE Coiffeur, Dienerstrasse 7, 8004 Zürich" class="w-full h-full object-cover" style="min-height: 320px; object-position: center;" loading="lazy">
                         </div>
-                        <!-- Schritte -->
                         <div class="p-8 md:p-10 flex flex-col gap-7">
                             <div class="flex items-start gap-5">
                                 <div class="w-10 h-10 bg-gradient-to-br from-gold-500 to-gold-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
@@ -495,7 +836,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
     
@@ -505,14 +845,16 @@
                 <div class="flex items-center gap-3">
                     <img src="https://z-cdn-media.chatglm.cn/files/33b80a9f-11d3-4dc1-b539-3712b01fcde5.png?auth_key=1877390669-fbddf71de09240ca9c174fa31da52164-0-101ac1579330c766495a64f06971530b" alt="Logo" class="h-12 w-auto opacity-80 filter brightness-200">
                 </div>
-                <nav class="flex flex-wrap items-center justify-center gap-8">
+                <nav class="flex flex-wrap items-center justify-center gap-6 lg:gap-8">
                     <a href="#about" class="text-cream-200 hover:text-gold-400 text-xs font-semibold uppercase tracking-[0.2em] transition-colors">Über uns</a>
                     <a href="#services" class="text-cream-200 hover:text-gold-400 text-xs font-semibold uppercase tracking-[0.2em] transition-colors">Leistungen</a>
                     <a href="#gallery" class="text-cream-200 hover:text-gold-400 text-xs font-semibold uppercase tracking-[0.2em] transition-colors">Galerie</a>
+                    <a href="#reviews" class="text-cream-200 hover:text-gold-400 text-xs font-semibold uppercase tracking-[0.2em] transition-colors">Reviews</a>
+                    <a href="#faq" class="text-cream-200 hover:text-gold-400 text-xs font-semibold uppercase tracking-[0.2em] transition-colors">FAQ</a>
                     <a href="#contact" class="text-cream-200 hover:text-gold-400 text-xs font-semibold uppercase tracking-[0.2em] transition-colors">Kontakt</a>
                 </nav>
                 <div class="flex items-center gap-4">
-                    <a href="https://www.instagram.com/" target="_blank" class="w-12 h-12 rounded-full border border-cream-200/20 flex items-center justify-center text-cream-200 hover:text-gold-400 hover:border-gold-400 hover:bg-white/5 transition-all" aria-label="Instagram">
+                    <a href="https://www.instagram.com/jirehbeautystudiobybelky" target="_blank" class="w-12 h-12 rounded-full border border-cream-200/20 flex items-center justify-center text-cream-200 hover:text-gold-400 hover:border-gold-400 hover:bg-white/5 transition-all" aria-label="Instagram">
                         <span class="iconify text-xl" data-icon="ph:instagram-logo-fill" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -520,7 +862,10 @@
             <div class="mt-12 pt-8 border-t border-cream-200/10">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
                     <p class="text-cream-200/60 text-xs tracking-wider">© 2025 Jireh Beauty Studio. Alle Rechte vorbehalten.</p>
-                    <p class="text-cream-200/60 text-xs tracking-wider">Designed by <a href="https://www.wildwave.ch" target="_blank" class="text-gold-400 hover:text-gold-300 font-medium transition-colors">wildwave</a></p>
+                    <div class="flex items-center gap-6">
+                        <button onclick="openImpressum()" class="text-cream-200/60 hover:text-gold-400 text-xs tracking-wider transition-colors cursor-pointer">Impressum</button>
+                        <p class="text-cream-200/60 text-xs tracking-wider">Designed by <a href="https://www.wildwave.ch" target="_blank" class="text-gold-400 hover:text-gold-300 font-medium transition-colors">wildwave</a></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -528,7 +873,6 @@
     
     <!-- Speed-Dial Floating Button -->
     <div id="speedDial" class="fixed bottom-6 right-6 z-30 lg:hidden flex flex-col items-end gap-3">
-        <!-- Options (hidden by default) -->
         <div id="speedDialOptions" class="flex flex-col items-end gap-3" style="opacity:0; pointer-events:none; transform: translateY(10px); transition: opacity 0.25s ease, transform 0.25s ease;">
             <div class="flex items-center gap-3">
                 <span class="bg-white text-bronze-800 text-xs font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap">Termin buchen</span>
@@ -543,12 +887,154 @@
                 </a>
             </div>
         </div>
-        <!-- Main toggle button -->
         <button id="speedDialBtn" onclick="toggleSpeedDial()" class="btn-gold w-14 h-14 rounded-full flex items-center justify-center shadow-2xl border border-gold-300/30 floating-btn" aria-label="Kontakt" aria-expanded="false">
             <span id="speedDialIcon" class="iconify text-white text-2xl transition-transform duration-300" data-icon="ph:chat-circle-dots-fill" aria-hidden="true"></span>
         </button>
     </div>
+
+    <!-- ========== IMPRESSUM POPUP ========== -->
+    <div id="impressumModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(30, 22, 13, 0.7); backdrop-filter: blur(10px);" role="dialog" aria-modal="true" aria-label="Impressum">
+        <div class="modal-content impressum-content bg-white rounded-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gold-500/20">
+            <!-- Header -->
+            <div class="sticky top-0 bg-white/95 backdrop-blur-md rounded-t-2xl border-b border-gold-500/10 px-6 md:px-10 py-6 flex items-center justify-between z-10">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-cream-100 to-gold-100 rounded-xl flex items-center justify-center shadow-sm border border-gold-200/50">
+                        <span class="iconify text-gold-600 text-2xl" data-icon="ph:scales-fill" aria-hidden="true"></span>
+                    </div>
+                    <h3 class="font-display text-2xl md:text-3xl text-bronze-800">Impressum</h3>
+                </div>
+                <button onclick="closeImpressum()" class="w-10 h-10 rounded-full bg-cream-50 flex items-center justify-center hover:bg-cream-100 text-bronze-500 hover:text-bronze-800 transition-colors" aria-label="Schliessen">
+                    <span class="iconify text-xl" data-icon="ph:x-bold" aria-hidden="true"></span>
+                </button>
+            </div>
+            <!-- Body -->
+            <div class="px-6 md:px-10 py-8 md:py-10">
+                <div class="space-y-8">
+                    <!-- Angaben gemäss Art. 5 DSG -->
+                    <div>
+                        <h4 class="font-display text-xl text-bronze-800 mb-3 flex items-center gap-2">
+                            <span class="w-6 h-px bg-gold-500"></span> Angaben gemäss Art. 5 DSG
+                        </h4>
+                        <div class="text-bronze-600 text-sm leading-relaxed space-y-1">
+                            <p><strong class="text-bronze-800">Firmenname:</strong> Jireh Beauty Studio by Belky</p>
+                            <p><strong class="text-bronze-800">Inhaberin:</strong> Belky</p>
+                            <p><strong class="text-bronze-800">Adresse:</strong> Dienerstrasse 7, 8004 Zürich, Schweiz</p>
+                            <p><strong class="text-bronze-800">Telefon:</strong> <a href="tel:+41772216088" class="text-gold-600 hover:text-gold-700 transition-colors">+41 77 221 60 88</a></p>
+                            <p><strong class="text-bronze-800">E-Mail:</strong> <a href="mailto:info@jirehbeautystudio.ch" class="text-gold-600 hover:text-gold-700 transition-colors">info@jirehbeautystudio.ch</a></p>
+                            <p><strong class="text-bronze-800">Instagram:</strong> <a href="https://www.instagram.com/jirehbeautystudiobybelky" target="_blank" class="text-gold-600 hover:text-gold-700 transition-colors">@jirehbeautystudiobybelky</a></p>
+                        </div>
+                    </div>
+
+                    <div class="w-full h-px bg-gold-500/15"></div>
+
+                    <!-- Rechtlicher Hinweis -->
+                    <div>
+                        <h4 class="font-display text-xl text-bronze-800 mb-3 flex items-center gap-2">
+                            <span class="w-6 h-px bg-gold-500"></span> Haftungsausschluss
+                        </h4>
+                        <p class="text-bronze-600 text-sm leading-relaxed">Der Autor übernimmt keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen den Autor, welche sich auf Schäden materieller oder immaterieller Art beziehen, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden, sind grundsätzlich ausgeschlossen.</p>
+                    </div>
+
+                    <div class="w-full h-px bg-gold-500/15"></div>
+
+                    <!-- Urheberrecht -->
+                    <div>
+                        <h4 class="font-display text-xl text-bronze-800 mb-3 flex items-center gap-2">
+                            <span class="w-6 h-px bg-gold-500"></span> Urheberrecht
+                        </h4>
+                        <p class="text-bronze-600 text-sm leading-relaxed">Alle auf dieser Website veröffentlichten Inhalte (Texte, Bilder, Grafiken, Logos, Designs) sind urheberrechtlich geschützt. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung ausserhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+                    </div>
+
+                    <div class="w-full h-px bg-gold-500/15"></div>
+
+                    <!-- Bildnachweise -->
+                    <div>
+                        <h4 class="font-display text-xl text-bronze-800 mb-3 flex items-center gap-2">
+                            <span class="w-6 h-px bg-gold-500"></span> Bildnachweise
+                        </h4>
+                        <p class="text-bronze-600 text-sm leading-relaxed">Einige Bilder auf dieser Website stammen von <a href="https://www.pexels.com" target="_blank" class="text-gold-600 hover:text-gold-700 transition-colors">Pexels.com</a> (Lizenz: Pexels License). Alle anderen Bilder und Grafiken sind Eigentum von Jireh Beauty Studio by Belky.</p>
+                    </div>
+
+                    <div class="w-full h-px bg-gold-500/15"></div>
+
+                    <!-- Externe Links -->
+                    <div>
+                        <h4 class="font-display text-xl text-bronze-800 mb-3 flex items-center gap-2">
+                            <span class="w-6 h-px bg-gold-500"></span> Externe Links
+                        </h4>
+                        <p class="text-bronze-600 text-sm leading-relaxed">Diese Website enthält Verweise auf externe Webseiten Dritter. Auf den Inhalt dieser Seiten hat der Autor keinen Einfluss und kann daher für deren Inhalte keine Haftung übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.</p>
+                    </div>
+
+                    <div class="w-full h-px bg-gold-500/15"></div>
+
+                    <!-- Datenschutz -->
+                    <div>
+                        <h4 class="font-display text-xl text-bronze-800 mb-3 flex items-center gap-2">
+                            <span class="w-6 h-px bg-gold-500"></span> Datenschutz
+                        </h4>
+                        <p class="text-bronze-600 text-sm leading-relaxed">Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften (Schweizerisches Datenschutzgesetz, DSG). Personenbezogene Daten werden auf dieser Webseite nur im technisch notwendigen Umfang erhoben. Eine Weitergabe an Dritte zu nichtkommerziellen Zwecken findet nicht statt.</p>
+                        <p class="text-bronze-600 text-sm leading-relaxed mt-3">Wir setzen keine Tracking-Cookies ein. Die eingebettete Google Maps Karte kann jedoch Daten an Google übermitteln. Weitere Informationen finden Sie in der <a href="https://policies.google.com/privacy" target="_blank" class="text-gold-600 hover:text-gold-700 transition-colors">Datenschutzerklärung von Google</a>.</p>
+                    </div>
+
+                    <div class="w-full h-px bg-gold-500/15"></div>
+
+                    <!-- Online-Streitbeilegung -->
+                    <div>
+                        <h4 class="font-display text-xl text-bronze-800 mb-3 flex items-center gap-2">
+                            <span class="w-6 h-px bg-gold-500"></span> Online-Streitbeilegung
+                        </h4>
+                        <p class="text-bronze-600 text-sm leading-relaxed">Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr" target="_blank" class="text-gold-600 hover:text-gold-700 transition-colors">https://ec.europa.eu/consumers/odr</a>. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+                    </div>
+
+                    <div class="w-full h-px bg-gold-500/15"></div>
+
+                    <!-- Standort -->
+                    <div>
+                        <h4 class="font-display text-xl text-bronze-800 mb-3 flex items-center gap-2">
+                            <span class="w-6 h-px bg-gold-500"></span> Standort & Gerichtsstand
+                        </h4>
+                        <p class="text-bronze-600 text-sm leading-relaxed">Der Standort des Unternehmens ist Zürich, Schweiz. Es gilt Schweizer Recht. Gerichtsstand ist Zürich.</p>
+                    </div>
+                </div>
+
+                <!-- Letztes Update -->
+                <div class="mt-10 pt-6 border-t border-gold-500/10">
+                    <p class="text-bronze-400 text-xs text-center">Stand: Januar 2025</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Service Modal -->
+    <div id="serviceModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(30, 22, 13, 0.6); backdrop-filter: blur(8px);" role="dialog" aria-modal="true">
+        <div class="modal-content bg-white rounded-2xl w-full max-w-md max-h-[85vh] overflow-y-auto shadow-2xl border border-gold-500/20">
+            <div class="sticky top-0 bg-white/95 backdrop-blur-md rounded-t-2xl border-b border-gold-500/10 px-6 md:px-8 py-5 md:py-6 flex items-center justify-between z-10">
+                <div class="flex items-center gap-4">
+                    <div id="modalIcon" class="w-12 h-12 bg-gradient-to-br from-cream-100 to-gold-100 rounded-xl flex items-center justify-center shadow-sm border border-gold-200/50">
+                    </div>
+                    <h3 id="modalTitle" class="font-display text-2xl text-bronze-800">Leistung</h3>
+                </div>
+                <button onclick="closeServiceModal()" class="w-10 h-10 rounded-full bg-cream-50 flex items-center justify-center hover:bg-cream-100 text-bronze-500 hover:text-bronze-800 transition-colors" aria-label="Schliessen">
+                    <span class="iconify text-xl" data-icon="ph:x-bold" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div id="modalBody" class="px-6 md:px-8 py-6"></div>
+            <div class="sticky bottom-0 bg-white/95 backdrop-blur-md rounded-b-2xl border-t border-gold-500/10 px-6 md:px-8 py-6">
+                <a href="https://koalendar.com/e/treffen-sie-belky" target="_blank" class="btn-gold w-full py-4 text-[0.75rem] font-bold uppercase tracking-wider rounded-full text-center block">Diese Leistung buchen</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox-backdrop fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(20, 15, 10, 0.95); backdrop-filter: blur(5px);" onclick="closeLightbox(event)" role="dialog" aria-modal="true">
+        <button onclick="closeLightbox(event)" class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/25 hover:scale-105 transition-all z-10" aria-label="Schliessen">
+            <span class="iconify text-white text-xl" data-icon="ph:x-bold" aria-hidden="true"></span>
+        </button>
+        <img id="lightboxImg" src="" alt="" class="lightbox-img max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl">
+    </div>
+
     <script>
+        // Speed Dial
         function toggleSpeedDial() {
             const options = document.getElementById('speedDialOptions');
             const btn = document.getElementById('speedDialBtn');
@@ -568,7 +1054,6 @@
                 icon.setAttribute('data-icon', 'ph:x-bold');
             }
         }
-        // Close on outside click
         document.addEventListener('click', function(e) {
             const dial = document.getElementById('speedDial');
             if (dial && !dial.contains(e.target)) {
@@ -582,35 +1067,8 @@
                 icon.setAttribute('data-icon', 'ph:chat-circle-dots-fill');
             }
         });
-    </script>
-    
-    <div id="serviceModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(30, 22, 13, 0.6); backdrop-filter: blur(8px);" role="dialog" aria-modal="true">
-        <div class="modal-content bg-white rounded-2xl w-full max-w-md max-h-[85vh] overflow-y-auto shadow-2xl border border-gold-500/20">
-            <div class="sticky top-0 bg-white/95 backdrop-blur-md rounded-t-2xl border-b border-gold-500/10 px-6 md:px-8 py-5 md:py-6 flex items-center justify-between z-10">
-                <div class="flex items-center gap-4">
-                    <div id="modalIcon" class="w-12 h-12 bg-gradient-to-br from-cream-100 to-gold-100 rounded-xl flex items-center justify-center shadow-sm border border-gold-200/50">
-                        </div>
-                    <h3 id="modalTitle" class="font-display text-2xl text-bronze-800">Leistung</h3>
-                </div>
-                <button onclick="closeServiceModal()" class="w-10 h-10 rounded-full bg-cream-50 flex items-center justify-center hover:bg-cream-100 text-bronze-500 hover:text-bronze-800 transition-colors" aria-label="Schliessen">
-                    <span class="iconify text-xl" data-icon="ph:x-bold" aria-hidden="true"></span>
-                </button>
-            </div>
-            <div id="modalBody" class="px-6 md:px-8 py-6"></div>
-            <div class="sticky bottom-0 bg-white/95 backdrop-blur-md rounded-b-2xl border-t border-gold-500/10 px-6 md:px-8 py-6">
-                <a href="https://koalendar.com/e/treffen-sie-belky" target="_blank" class="btn-gold w-full py-4 text-[0.75rem] font-bold uppercase tracking-wider rounded-full text-center block">Diese Leistung buchen</a>
-            </div>
-        </div>
-    </div>
-    
-    <div id="lightbox" class="lightbox-backdrop fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(20, 15, 10, 0.95); backdrop-filter: blur(5px);" onclick="closeLightbox(event)" role="dialog" aria-modal="true">
-        <button onclick="closeLightbox(event)" class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/25 hover:scale-105 transition-all z-10" aria-label="Schliessen">
-            <span class="iconify text-white text-xl" data-icon="ph:x-bold" aria-hidden="true"></span>
-        </button>
-        <img id="lightboxImg" src="" alt="" class="lightbox-img max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl">
-    </div>
 
-    <script>
+        // Mobile Menu
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         let menuOpen = false;
@@ -632,11 +1090,13 @@
             });
         });
         
+        // Navbar scroll
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         }, { passive: true });
         
+        // Scroll animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -648,7 +1108,49 @@
         
         document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
         
-        // JS Daten: 'ph:sparkle-fill' als sicheres Icon für Brows integriert
+        // FAQ Accordion
+        function toggleFaq(el) {
+            const item = el.closest('.faq-item');
+            const isActive = item.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.faq-item.active').forEach(activeItem => {
+                activeItem.classList.remove('active');
+                activeItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            });
+            
+            // Open clicked if it was closed
+            if (!isActive) {
+                item.classList.add('active');
+                el.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        // FAQ keyboard support
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleFaq(this);
+                }
+            });
+        });
+
+        // Impressum Modal
+        const impressumModal = document.getElementById('impressumModal');
+        function openImpressum() {
+            impressumModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeImpressum() {
+            impressumModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        impressumModal.addEventListener('click', (e) => {
+            if (e.target === impressumModal) closeImpressum();
+        });
+
+        // Service Modal
         const serviceData = {
             nails: { title: 'Nägel', icon: 'ph:hand-palm-fill', description: 'Von der klassischen Gel-Maniküre bis hin zu atemberaubenden Nagel-Extensions.', items: [{ name: 'Gel-Maniküre', price: '70 CHF', duration: '~60 Min.' }, { name: 'Rubber Base + Gel', price: '80 CHF', duration: '~60 Min.' }, { name: 'Extensions Neuset', price: '85-95 CHF', duration: '~90-120 Min.' }, { name: 'Refill', price: '80-90 CHF', duration: '~60-90 Min.' }], extras: [{ name: 'French / Color French', price: '+10 CHF' }, { name: 'Nail Art', price: 'ab 5 CHF/Nagel' }] },
             lashes: { title: 'Wimpern', icon: 'ph:eye-fill', description: 'Verleihen Sie Ihren Augen den perfekten Ausdruck.', items: [{ name: 'Lash Lift', price: '90 CHF', duration: '~60 Min.' }, { name: 'Classic Extensions', price: '100 CHF', duration: '~90 Min.' }, { name: 'Volume/Hybrid', price: '120 CHF', duration: '~120 Min.' }] },
@@ -679,6 +1181,7 @@
         function closeServiceModal() { serviceModal.classList.remove('active'); document.body.style.overflow = ''; }
         serviceModal.addEventListener('click', (e) => { if (e.target === serviceModal) closeServiceModal(); });
         
+        // Lightbox
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
         function openLightbox(el) {
@@ -691,13 +1194,16 @@
         }
         function closeLightbox(e) { if (e.target === lightbox || e.currentTarget.tagName === 'BUTTON') { lightbox.classList.remove('active'); document.body.style.overflow = ''; } }
         
+        // Escape key handler
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
+                if (impressumModal.classList.contains('active')) closeImpressum();
                 if (serviceModal.classList.contains('active')) closeServiceModal();
                 if (lightbox.classList.contains('active')) { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
             }
         });
         
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const target = document.querySelector(this.getAttribute('href'));
