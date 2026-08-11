@@ -2116,7 +2116,9 @@
         }
         .offers-grid {
             display: grid;
-            grid-template-columns: 1fr 1.15fr 1fr;
+            grid-template-columns: 1fr;
+            max-width: 640px;
+            margin: 0 auto;
             gap: 1.5rem;
             align-items: start;
         }
@@ -2214,14 +2216,27 @@
             margin-top: .75rem;
             align-self: flex-start;
         }
+        .offer-cover {
+            display: block;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(200, 160, 80, .3);
+            box-shadow: 0 0 60px rgba(200, 160, 80, .08), 0 20px 60px rgba(0, 0, 0, .4);
+            transition: transform .3s, border-color .3s, box-shadow .3s;
+        }
+        .offer-cover img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .offer-cover:hover {
+            transform: translateY(-6px);
+            border-color: rgba(200, 160, 80, .55);
+            box-shadow: 0 0 70px rgba(200, 160, 80, .14), 0 24px 70px rgba(0, 0, 0, .45);
+        }
         @media(max-width: 860px) {
             .offers-grid {
-                grid-template-columns: 1fr;
-                max-width: 420px;
-                margin: 0 auto;
-            }
-            .offer-card--featured {
-                order: -1;
+                max-width: 460px;
             }
         }
     </style>
@@ -2532,33 +2547,9 @@
             <div class="offers-label ro"><span class="eyebrow">Exklusiv für dich</span></div>
             <div class="offers-grid ro">
 
-                <div class="offer-card">
-                    <div class="offer-ribbon">Neu-Kundin</div>
-                    <div class="offer-icon">✦</div>
-                    <div class="offer-pct">15<span>%</span></div>
-                    <h3>Willkommensrabatt</h3>
-                    <p>Dein erster Besuch bei Jireh — mit 15&nbsp;% Nachlass auf die gesamte Behandlung. Kein Mindestbestellwert, keine Ausnahmen.</p>
-                    <div class="offer-cond">Gültig beim ersten Termin · automatisch abgezogen</div>
-                </div>
-
-                <div class="offer-card offer-card--featured">
-                    <div class="offer-ribbon featured">Studierende &amp; Neu</div>
-                    <div class="offer-icon">✦✦</div>
-                    <div class="offer-pct">25<span>%</span></div>
-                    <h3>Best Deal</h3>
-                    <p>Studentin und zum ersten Mal hier? Beide Rabatte sind kombinierbar — spare bis zu 25&nbsp;% auf deinen ersten Termin.</p>
-                    <div class="offer-cond">10&nbsp;% Studierendenrabatt + 15&nbsp;% Willkommensrabatt</div>
-                    <a class="btn btn-gold" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank"><span>Jetzt buchen &amp; sparen</span></a>
-                </div>
-
-                <div class="offer-card">
-                    <div class="offer-ribbon">Studierende</div>
-                    <div class="offer-icon">✦</div>
-                    <div class="offer-pct">10<span>%</span></div>
-                    <h3>Studierendenrabatt</h3>
-                    <p>Mit gültigem Studentenausweis erhältst du dauerhaft 10&nbsp;% auf jede Behandlung — bei jedem Besuch.</p>
-                    <div class="offer-cond">Ausweis bitte beim Termin vorweisen</div>
-                </div>
+                <a class="offer-cover" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener">
+                    <img src="https://res.cloudinary.com/dtzpydtdg/image/upload/v1786459627/1786459580519_s8px3n.png" alt="Kombi-Rabatt Hände & Füsse — 10% auf die günstigere Dienstleistung" loading="lazy" />
+                </a>
 
             </div>
         </div>
