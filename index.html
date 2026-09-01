@@ -2234,6 +2234,23 @@
             border-color: rgba(200, 160, 80, .55);
             box-shadow: 0 0 70px rgba(200, 160, 80, .14), 0 24px 70px rgba(0, 0, 0, .45);
         }
+        .offer-tile {
+            display: flex;
+            flex-direction: column;
+            gap: .9rem;
+        }
+        .offer-tile:hover .offer-cover {
+            transform: translateY(-6px);
+            border-color: rgba(200, 160, 80, .55);
+            box-shadow: 0 0 70px rgba(200, 160, 80, .14), 0 24px 70px rgba(0, 0, 0, .45);
+        }
+        .offer-caption {
+            text-align: center;
+            font-size: .9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, .75);
+            padding: 0 .5rem;
+        }
         @media(max-width: 860px) {
             .offers-grid {
                 max-width: 460px;
@@ -2547,9 +2564,19 @@
             <div class="offers-label ro"><span class="eyebrow">Exklusiv für dich</span></div>
             <div class="offers-grid ro">
 
-                <a class="offer-cover" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener">
-                    <img src="https://res.cloudinary.com/dtzpydtdg/image/upload/v1786459627/1786459580519_s8px3n.png" alt="Kombi-Rabatt Hände & Füsse — 10% auf die günstigere Dienstleistung" loading="lazy" />
-                </a>
+                <div class="offer-tile">
+                    <a class="offer-cover" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener">
+                        <img src="https://res.cloudinary.com/dtzpydtdg/image/upload/v1788276816/haende_fuesse_gel_manikure_pedikure_cover_cb331804_y0ldu4.png" alt="Gel-Maniküre & Pediküre — 130 CHF statt 160 CHF" loading="lazy" />
+                    </a>
+                    <p class="offer-caption">Rundum verwöhnt von Kopf bis Fuss: Gel-Maniküre & Pediküre im Kombipaket — perfekt gepflegte Hände & Füsse zum Vorteilspreis.</p>
+                </div>
+
+                <div class="offer-tile">
+                    <a class="offer-cover" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener">
+                        <img src="https://res.cloudinary.com/dtzpydtdg/image/upload/v1788276817/wimpern_brauen_wimpernverlaengerung_augenbrauen_cover_fc9748db_yn1c7w.png" alt="Wimpernverlängerung & Augenbrauen — 110 CHF statt 125 CHF" loading="lazy" />
+                    </a>
+                    <p class="offer-caption">Wach, offen, definiert: Wimpernverlängerung & Augenbrauen im Kombipaket für einen makellosen Blick — jetzt zum Sparpreis.</p>
+                </div>
 
             </div>
         </div>
