@@ -116,13 +116,6 @@
 
         .container { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--pad); }
         .section { padding-block: var(--s-8); position: relative; }
-        [hidden] { display: none !important; }
-        .page-intro { padding: calc(76px + var(--s-6)) 0 var(--s-6); border-bottom: 1px solid var(--line-soft); }
-        .page-intro .kicker { margin-bottom: var(--s-2); }
-        .page-intro h1 { max-width: 15ch; font-size: clamp(2.8rem, 1.6rem + 5vw, 5.5rem); line-height: .98; }
-        .page-intro p { max-width: 58ch; margin-top: var(--s-2); color: var(--muted); font-size: var(--fs-lead); }
-        .menu a[aria-current="page"] { color: var(--gold-deep); }
-        .menu a.ml[aria-current="page"]::after { transform: scaleX(1); }
         .bg-sand { background: var(--sand); }
         .dark { background: var(--espresso); color: var(--cream); }
         .dark h2 em, .dark h3 em { color: var(--gold-soft); }
@@ -1135,18 +1128,17 @@
     <!-- ===================== NAV ===================== -->
     <nav class="nav" id="nav" aria-label="Hauptnavigation">
         <div class="container nav-inner">
-            <a class="brand" href="/" aria-label="Jireh Beauty – zur Startseite">
+            <a class="brand" href="#top" aria-label="Jireh Beauty – zum Seitenanfang">
                 <img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_120/v1779219919/IMG-20260428-WA0009_z9dlkl.jpg" alt="Jireh Beauty Logo" width="38" height="38" />
                 <span class="brand-txt">Jireh <em>Beauty</em></span>
             </a>
             <div class="menu" id="menu">
-                <a class="ml" href="/">Start</a>
-                <a class="ml" href="/?seite=leistungen">Behandlungen</a>
-                <a class="ml" href="/?seite=preise">Preise</a>
-                <a class="ml" href="/?seite=galerie">Galerie</a>
-                <a class="ml" href="/?seite=studio">Studio</a>
-                <a class="ml" href="/?seite=faq">FAQ</a>
-                <a class="ml" href="/?seite=kontakt">Kontakt</a>
+                <a class="ml" href="#services">Leistungen <span>01</span></a>
+                <a class="ml" href="#preise">Preise <span>02</span></a>
+                <a class="ml" href="#gallery">Galerie <span>03</span></a>
+                <a class="ml" href="#reviews">Reviews <span>04</span></a>
+                <a class="ml" href="#about">Über Belky <span>05</span></a>
+                <a class="ml" href="#contact">Kontakt <span>06</span></a>
                 <a class="btn" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" id="wahanda-online-booking-widget" target="_blank" rel="noopener"><span>Termin buchen</span><i class="arr"></i></a>
                 <div class="menu-foot">
                     Industriestrasse 27, 8610 Uster<br />
@@ -1160,7 +1152,7 @@
     <main id="top">
 
         <!-- ===================== HERO ===================== -->
-        <header class="hero" id="hero" data-page="home">
+        <header class="hero" id="hero">
             <div class="container">
                 <div class="hero-grid">
                     <div class="hero-copy">
@@ -1195,7 +1187,7 @@
         </header>
 
         <!-- ===================== STATEMENT ===================== -->
-        <section class="statement" aria-label="Philosophie" data-page="home">
+        <section class="statement" aria-label="Philosophie">
             <div class="container statement-grid">
                 <span class="kicker">Philosophie</span>
                 <div>
@@ -1206,7 +1198,7 @@
         </section>
 
         <!-- ===================== SERVICES ===================== -->
-        <section class="section services" id="services" data-page="leistungen">
+        <section class="section services" id="services">
             <div class="container">
                 <header class="sec-head sec-head--split ro">
                     <div>
@@ -1218,7 +1210,7 @@
 
                 <div class="svc-grid">
                     <article class="svc ro">
-                        <a class="svc-media" href="/?seite=preise" aria-label="Preise Maniküre ansehen"><img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_1100/v1779219917/IMG-20260428-WA0046_cor7wy.jpg" alt="Maniküre mit Gellack bei Jireh Beauty" loading="lazy" /></a>
+                        <a class="svc-media" href="#preise" aria-label="Preise Maniküre ansehen"><img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_1100/v1779219917/IMG-20260428-WA0046_cor7wy.jpg" alt="Maniküre mit Gellack bei Jireh Beauty" loading="lazy" /></a>
                         <div class="svc-body">
                             <span class="svc-no">01</span>
                             <h3>Maniküre</h3>
@@ -1227,7 +1219,7 @@
                         </div>
                     </article>
                     <article class="svc svc--tall ro">
-                        <a class="svc-media" href="/?seite=preise" aria-label="Preise Pediküre ansehen"><img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_800/v1779219917/IMG-20260428-WA0040_faacey.jpg" alt="Komplette Pediküre mit Fussbad und Massage" loading="lazy" /></a>
+                        <a class="svc-media" href="#preise" aria-label="Preise Pediküre ansehen"><img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_800/v1779219917/IMG-20260428-WA0040_faacey.jpg" alt="Komplette Pediküre mit Fussbad und Massage" loading="lazy" /></a>
                         <div class="svc-body">
                             <span class="svc-no">02</span>
                             <h3>Pediküre</h3>
@@ -1236,7 +1228,7 @@
                         </div>
                     </article>
                     <article class="svc svc--tall ro">
-                        <a class="svc-media" href="/?seite=preise" aria-label="Preise Kunstnägel ansehen"><img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_800/v1779219917/IMG-20260428-WA0052_cdldfo.jpg" alt="Kunstnägel Neusatz mit Design" loading="lazy" /></a>
+                        <a class="svc-media" href="#preise" aria-label="Preise Kunstnägel ansehen"><img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_800/v1779219917/IMG-20260428-WA0052_cdldfo.jpg" alt="Kunstnägel Neusatz mit Design" loading="lazy" /></a>
                         <div class="svc-body">
                             <span class="svc-no">03</span>
                             <h3>Kunstnägel</h3>
@@ -1245,7 +1237,7 @@
                         </div>
                     </article>
                     <article class="svc ro">
-                        <a class="svc-media" href="/?seite=preise" aria-label="Preise Wimpern und Brauen ansehen"><img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_1100/v1779219918/IMG-20260428-WA0013_qnbyrh.jpg" alt="Augenbrauen Design und Brow Lamination" loading="lazy" /></a>
+                        <a class="svc-media" href="#preise" aria-label="Preise Wimpern und Brauen ansehen"><img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_1100/v1779219918/IMG-20260428-WA0013_qnbyrh.jpg" alt="Augenbrauen Design und Brow Lamination" loading="lazy" /></a>
                         <div class="svc-body">
                             <span class="svc-no">04</span>
                             <h3>Wimpern &amp; Brauen</h3>
@@ -1281,7 +1273,7 @@
         </section>
 
         <!-- ===================== PRICE MENU ===================== -->
-        <section class="section bg-sand" id="preise" data-page="preise">
+        <section class="section bg-sand" id="preise">
             <div class="container prices-layout">
                 <aside class="prices-aside ro">
                     <span class="kicker">02 — Preisliste</span>
@@ -1451,7 +1443,7 @@
         </section>
 
         <!-- ===================== OFFERS ===================== -->
-        <section class="section offers" id="offers" data-page="leistungen">
+        <section class="section offers" id="offers">
             <div class="container">
                 <header class="sec-head sec-head--split ro">
                     <div>
@@ -1480,7 +1472,7 @@
         </section>
 
         <!-- ===================== GALLERY ===================== -->
-        <section class="section bg-sand gallery" id="gallery" data-page="galerie">
+        <section class="section bg-sand gallery" id="gallery">
             <div class="container">
                 <header class="sec-head sec-head--split ro">
                     <div>
@@ -1503,7 +1495,7 @@
         </section>
 
         <!-- ===================== WHY ===================== -->
-        <section class="section why" id="why" data-page="home">
+        <section class="section why" id="why">
             <div class="container why-layout">
                 <div class="why-aside ro">
                     <span class="kicker">Warum Jireh</span>
@@ -1520,7 +1512,7 @@
         </section>
 
         <!-- ===================== REELS ===================== -->
-        <section class="section dark reels" id="reels" data-page="galerie">
+        <section class="section dark reels" id="reels">
             <div class="container">
                 <header class="sec-head sec-head--split ro">
                     <div>
@@ -1545,7 +1537,7 @@
         </section>
 
         <!-- ===================== REVIEWS ===================== -->
-        <section class="section reviews" id="reviews" data-page="home">
+        <section class="section reviews" id="reviews">
             <div class="container">
                 <div class="rev-layout">
                     <div class="rev-score ro">
@@ -1568,7 +1560,7 @@
         </section>
 
         <!-- ===================== PROCESS ===================== -->
-        <section class="section bg-sand process" data-page="studio">
+        <section class="section bg-sand process">
             <div class="container">
                 <header class="sec-head ro">
                     <span class="kicker">So läuft dein Termin</span>
@@ -1584,7 +1576,7 @@
         </section>
 
         <!-- ===================== ABOUT ===================== -->
-        <section class="section about" id="about" data-page="studio">
+        <section class="section about" id="about">
             <div class="container about-grid">
                 <div class="about-img ro">
                     <div class="frame"><img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_900/v1779221788/0465bcbc-a1c2-4fc2-9960-ea7fd1c24653_xp9wmr.jpg" alt="Belky — Jireh Beauty Studio Uster" loading="lazy" /></div>
@@ -1605,7 +1597,7 @@
         </section>
 
         <!-- ===================== GIFT ===================== -->
-        <section class="section bg-sand gift" data-page="studio">
+        <section class="section bg-sand gift">
             <div class="container gift-grid">
                 <div class="ro">
                     <span class="kicker">Verschenken</span>
@@ -1625,7 +1617,7 @@
         </section>
 
         <!-- ===================== FAQ ===================== -->
-        <section class="section faq" id="faq" data-page="faq">
+        <section class="section faq" id="faq">
             <div class="container faq-layout">
                 <div class="ro">
                     <span class="kicker">Häufige Fragen</span>
@@ -1645,7 +1637,7 @@
         </section>
 
         <!-- ===================== FINAL CTA ===================== -->
-        <section class="final" data-page="home kontakt">
+        <section class="final">
             <div class="final-bg" aria-hidden="true"><img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_1800/v1788170969/IMG-20260830-WA0001_cpfd4x.jpg" alt="" loading="lazy" /></div>
             <div class="container">
                 <span class="kicker ro">Bereit für deinen Termin?</span>
@@ -1659,7 +1651,7 @@
         </section>
 
         <!-- ===================== CONTACT (incl. Wegbeschreibung) ===================== -->
-        <section class="section contact" id="contact" data-page="kontakt">
+        <section class="section contact" id="contact">
             <div class="container">
                 <header class="sec-head sec-head--split ro">
                     <div>
@@ -1727,12 +1719,13 @@
                 <div>
                     <h4>Navigation</h4>
                     <ul>
-                        <li><a href="/?seite=leistungen">Behandlungen</a></li>
-                        <li><a href="/?seite=preise">Preise</a></li>
-                        <li><a href="/?seite=galerie">Galerie</a></li>
-                        <li><a href="/?seite=studio">Studio</a></li>
-                        <li><a href="/?seite=faq">FAQ</a></li>
-                        <li><a href="/?seite=kontakt">Kontakt</a></li>
+                        <li><a href="#services">Leistungen</a></li>
+                        <li><a href="#preise">Preise</a></li>
+                        <li><a href="#gallery">Galerie</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#about">Über</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
                         <li><a href="#" id="open-impressum">Impressum</a></li>
                     </ul>
                 </div>
@@ -1794,37 +1787,6 @@
     <script>
         (function() {
             var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            var pages = {
-                home: { label: 'Startseite', title: 'Jireh Beauty Studio', description: 'Maniküre, Pediküre, Kunstnägel, Wimpernverlängerung und Brow Lamination in Uster — persönlich von Belky.' },
-                leistungen: { label: 'Behandlungen', title: 'Beauty Behandlungen in Uster', description: 'Entdecke Maniküre, Pediküre, Kunstnägel sowie Wimpern- und Brauenbehandlungen bei Jireh Beauty in Uster.' },
-                preise: { label: 'Preise', title: 'Alle Preise im Detail', description: 'Finde Behandlungen, Dauer und Preise transparent und übersichtlich für deinen Termin bei Jireh Beauty in Uster.' },
-                galerie: { label: 'Galerie', title: 'Echte Arbeiten, echte Ergebnisse', description: 'Entdecke Arbeiten und Einblicke aus dem Jireh Beauty Studio in Uster.' },
-                studio: { label: 'Studio', title: 'Persönlich. Ruhig. Mit Sorgfalt.', description: 'Lerne Belky und das Jireh Beauty Studio in Uster kennen — und erfahre, was deinen Termin besonders macht.' },
-                faq: { label: 'Häufige Fragen', title: 'Antworten auf einen Blick', description: 'Antworten zu Terminen, Behandlungen, Preisen, Standort und Zahlungsmöglichkeiten bei Jireh Beauty Uster.' },
-                kontakt: { label: 'Kontakt & Anfahrt', title: 'Besuch uns in Uster', description: 'Finde Jireh Beauty Studio in Uster und kontaktiere Belky für deinen persönlichen Beauty-Termin.' }
-            };
-            var requestedPage = new URLSearchParams(window.location.search).get('seite');
-            var pageKey = pages[requestedPage] ? requestedPage : 'home';
-            var page = pages[pageKey];
-            document.querySelectorAll('[data-page]').forEach(function(section) {
-                section.hidden = section.getAttribute('data-page').split(/\s+/).indexOf(pageKey) === -1;
-            });
-            if (pageKey !== 'home') {
-                var intro = document.createElement('section');
-                intro.className = 'page-intro';
-                intro.innerHTML = '<div class="container"><span class="kicker">' + page.label + '</span><h1>' + page.title + '</h1><p>' + page.description + '</p></div>';
-                document.getElementById('nav').insertAdjacentElement('afterend', intro);
-            }
-            document.title = pageKey === 'home' ? 'Jireh Beauty Studio Uster | Nägel, Wimpern & Pediküre by Belky' : page.label + ' | Jireh Beauty Studio Uster';
-            document.querySelectorAll('meta[property="og:title"], meta[name="twitter:title"]').forEach(function(meta) { meta.setAttribute('content', document.title); });
-            var ogUrl = document.querySelector('meta[property="og:url"]');
-            if (ogUrl) ogUrl.setAttribute('content', window.location.origin + (pageKey === 'home' ? '/' : '/?seite=' + pageKey));
-            document.querySelectorAll('meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]').forEach(function(meta) { meta.setAttribute('content', page.description); });
-            var canonical = document.querySelector('link[rel="canonical"]');
-            if (canonical) canonical.setAttribute('href', window.location.origin + (pageKey === 'home' ? '/' : '/?seite=' + pageKey));
-            document.querySelectorAll('#menu a').forEach(function(link) {
-                if ((pageKey === 'home' && link.getAttribute('href') === '/') || link.search.indexOf('seite=' + pageKey) !== -1) link.setAttribute('aria-current', 'page');
-            });
             var yr = document.getElementById('year');
             if (yr) yr.textContent = new Date().getFullYear();
 
