@@ -442,6 +442,7 @@ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 display: flex;
 align-items: center;
 justify-content: space-between;
+gap: clamp(0.75rem, 2vw, 2.75rem);
 height: 84px;
 }
 /* Brand */
@@ -451,6 +452,7 @@ align-items: center;
 gap: 0.9rem;
 position: relative;
 z-index: 920;
+flex-shrink: 0;
 }
 .brand-avatar {
 width: 44px;
@@ -461,6 +463,7 @@ border: 1px solid var(--gold);
 padding: 2px;
 background: #FFFFFF;
 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+flex-shrink: 0;
 }
 .brand-meta {
 display: flex;
@@ -471,6 +474,7 @@ font-family: var(--font-serif);
 font-size: 1.45rem;
 line-height: 1;
 color: var(--ink-primary);
+white-space: nowrap;
 }
 .brand-title em {
 font-style: italic;
@@ -478,24 +482,51 @@ color: var(--gold-deep);
 }
 .brand-sub {
 font-size: 0.68rem;
-letter-spacing: 0.22em;
+letter-spacing: 0.18em;
 text-transform: uppercase;
 color: var(--ink-muted);
-margin-top: 2px;
+margin-top: 3px;
+white-space: nowrap;
+}
+@media (max-width: 400px) {
+.brand-sub {
+letter-spacing: 0.1em;
+}
 }
 /* Live Studio Status Pill */
 .status-pill {
-display: inline-flex;
+/* Hidden in the nav on smaller screens – it used to squeeze the menu */
+display: none;
 align-items: center;
 gap: 0.45rem;
 font-size: 0.72rem;
 font-weight: 600;
 letter-spacing: 0.05em;
-padding: 4px 12px;
+padding: 5px 12px;
 border-radius: var(--radius-pill);
 background: rgba(37, 211, 102, 0.1);
 color: #13833D;
 border: 1px solid rgba(37, 211, 102, 0.25);
+white-space: nowrap;
+min-width: 0;
+}
+#liveStatusText {
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+/* Shown in the header only where there is room next to the menu */
+@media (min-width: 1200px) {
+.status-pill {
+display: inline-flex;
+max-width: 280px;
+}
+}
+/* The same live status inside the mobile drawer, where the header pill is hidden */
+.status-pill.drawer-status {
+display: inline-flex;
+max-width: none;
+margin-bottom: 1rem;
 }
 .status-pill.closed {
 background: rgba(132, 121, 112, 0.1);
@@ -523,21 +554,37 @@ animation: none;
 .desktop-nav {
 display: none;
 align-items: center;
-gap: 2rem;
+gap: clamp(0.9rem, 1.3vw, 1.6rem);
+margin-left: auto;
+flex-wrap: nowrap;
+/* The menu never shrinks – the status pill gives way instead */
+flex-shrink: 0;
 }
-@media (min-width: 1024px) {
+/* Below 1200px the 7 links + CTA would not fit without feeling cramped,
+so the drawer takes over instead of a squeezed bar. */
+@media (min-width: 1200px) {
 .desktop-nav {
 display: flex;
 }
 }
+/* Compact nav CTA so the bar keeps breathing room */
+.desktop-nav .btn-luxury {
+min-height: 44px;
+padding: 0.6rem 1.35rem;
+gap: 0.55rem;
+font-size: 0.72rem;
+letter-spacing: 0.12em;
+flex-shrink: 0;
+}
 .nav-item {
-font-size: 0.8rem;
+font-size: 0.76rem;
 font-weight: 500;
-letter-spacing: 0.14em;
+letter-spacing: 0.11em;
 text-transform: uppercase;
 color: var(--ink-secondary);
 position: relative;
-padding-block: 0.5rem;
+padding-block: 0.6rem;
+white-space: nowrap;
 transition: color 0.3s;
 }
 .nav-item::after {
@@ -571,7 +618,7 @@ position: relative;
 z-index: 920;
 cursor: pointer;
 }
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
 .burger-btn {
 display: none;
 }
@@ -600,7 +647,7 @@ position: fixed;
 inset: 0;
 background-color: var(--bg-body);
 z-index: 910;
-padding: 120px 2rem 2.5rem;
+padding: calc(100px + env(safe-area-inset-top)) clamp(1.25rem, 1rem + 4vw, 2.5rem) calc(2rem + env(safe-area-inset-bottom));
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -609,6 +656,7 @@ opacity: 0;
 visibility: hidden;
 transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, visibility 0.45s;
 overflow-y: auto;
+overscroll-behavior: contain;
 }
 .mobile-drawer.open {
 transform: translateY(0);
@@ -618,17 +666,19 @@ visibility: visible;
 .mobile-nav-links {
 display: flex;
 flex-direction: column;
-gap: 1.25rem;
+gap: clamp(0.85rem, 2vh, 1.35rem);
 }
 .mobile-link {
 font-family: var(--font-serif);
-font-size: 2.2rem;
+font-size: clamp(1.65rem, 1.1rem + 3.6vw, 2.2rem);
+line-height: 1.1;
 color: var(--ink-primary);
 display: flex;
 justify-content: space-between;
 align-items: baseline;
+gap: 1rem;
 border-bottom: 1px solid var(--border-soft);
-padding-bottom: 0.6rem;
+padding-bottom: 0.55rem;
 }
 .mobile-link span {
 font-family: var(--font-sans);
@@ -641,6 +691,7 @@ margin-top: 2rem;
 padding-top: 1.5rem;
 border-top: 1px solid var(--border-soft);
 font-size: 0.9rem;
+line-height: 1.7;
 color: var(--ink-secondary);
 }
 /* ==========================================================================
@@ -2141,7 +2192,7 @@ transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 .mobile-quick-bar.visible {
 transform: translateY(0);
 }
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
 .mobile-quick-bar {
 display: none;
 }
@@ -2342,6 +2393,10 @@ NAVIGATION BAR
 <a class="mobile-link" href="#contact">Anfahrt & Kontakt <span>08</span></a>
 </div>
 <div class="mobile-drawer-bottom">
+<div class="status-pill drawer-status" id="liveStatusPillDrawer">
+<span class="status-dot"></span>
+<span id="liveStatusTextDrawer">Öffnungszeiten werden geladen...</span>
+</div>
 <a class="btn-luxury" style="width:100%; margin-bottom:1rem;" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener">
 <span>Termin online reservieren</span>
 <span class="arrow-icon">→</span>
@@ -3552,9 +3607,12 @@ initCookieBanner();
 1. Live Opening Hours Indicator (Zurich Time)
 ---------------------------------------------------- */
 function initLiveStudioStatus() {
-var pill = document.getElementById('liveStatusPill');
-var text = document.getElementById('liveStatusText');
-if (!pill || !text) return;
+/* Header pill on wide screens, drawer pill on mobile/tablet */
+var pills = [
+{ pill: document.getElementById('liveStatusPill'), text: document.getElementById('liveStatusText') },
+{ pill: document.getElementById('liveStatusPillDrawer'), text: document.getElementById('liveStatusTextDrawer') }
+].filter(function(p) { return p.pill && p.text; });
+if (!pills.length) return;
 // Swiss time calculation
 var now = new Date();
 var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
@@ -3598,8 +3656,10 @@ var nextDay = (day === 2) ? "Do" : (day === 5) ? "Sa" : "morgen";
 statusString = "Geschlossen · Öffnet " + nextDay + " 09:30";
 }
 }
-text.textContent = statusString;
-pill.classList.toggle('closed', !isOpen);
+pills.forEach(function(p) {
+p.text.textContent = statusString;
+p.pill.classList.toggle('closed', !isOpen);
+});
 }
 /* ----------------------------------------------------
 2. Navigation & Drawer Logic
@@ -3607,23 +3667,81 @@ pill.classList.toggle('closed', !isOpen);
 function initNavigation() {
 var burgerBtn = document.getElementById('burgerBtn');
 var mobileDrawer = document.getElementById('mobileDrawer');
-var mobileLinks = mobileDrawer.querySelectorAll('.mobile-link, a');
+var siteNav = document.getElementById('siteNav');
+if (!burgerBtn || !mobileDrawer) return;
+
+/* Distance the scroll must leave so the fixed header never covers a heading */
+function navOffset() {
+var h = (siteNav && siteNav.offsetHeight) ? siteNav.offsetHeight : 84;
+return h + 16;
+}
+
 function toggleDrawer(open) {
 var isOpen = typeof open === 'boolean' ? open : !mobileDrawer.classList.contains('open');
 mobileDrawer.classList.toggle('open', isOpen);
 burgerBtn.classList.toggle('active', isOpen);
 burgerBtn.setAttribute('aria-expanded', isOpen);
+burgerBtn.setAttribute('aria-label', isOpen ? 'Menü schliessen' : 'Menü öffnen');
 mobileDrawer.setAttribute('aria-hidden', !isOpen);
 document.body.style.overflow = isOpen ? 'hidden' : '';
 }
+
+function scrollToHash(hash) {
+if (!hash || hash === '#') return false;
+var target = document.getElementById(hash.slice(1));
+if (!target) return false;
+var top = target.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - navOffset();
+window.scrollTo({ top: top < 0 ? 0 : top, behavior: 'smooth' });
+if (history.replaceState) history.replaceState(null, '', hash);
+/* Keep keyboard users anchored after the skip link */
+if (hash === '#main-content') {
+if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+setTimeout(function() { target.focus({ preventScroll: true }); }, 300);
+}
+return true;
+}
+
 burgerBtn.addEventListener('click', function() {
 toggleDrawer();
 });
-mobileLinks.forEach(function(link) {
-link.addEventListener('click', function() {
+
+/* One handler for every in-page link: closes the drawer, then scrolls.
+Without this the drawer stayed open and the page never moved. */
+document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+link.addEventListener('click', function(e) {
+var hash = link.getAttribute('href');
+if (!hash || hash === '#' || !document.getElementById(hash.slice(1))) return;
+e.preventDefault();
+var wasOpen = mobileDrawer.classList.contains('open');
 toggleDrawer(false);
+/* Let the drawer finish closing before scrolling on mobile */
+setTimeout(function() { scrollToHash(hash); }, wasOpen ? 280 : 0);
 });
 });
+
+/* Highlight the section currently in view */
+var navLinks = Array.prototype.slice.call(document.querySelectorAll('.desktop-nav .nav-item'));
+var navSections = navLinks.map(function(link) {
+var hash = link.getAttribute('href') || '';
+return document.getElementById(hash.slice(1));
+});
+function updateActiveSection() {
+var probe = (window.pageYOffset || document.documentElement.scrollTop) + navOffset() + 60;
+var current = -1;
+navSections.forEach(function(sec, i) {
+if (sec) {
+var top = sec.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop);
+if (top <= probe) current = i;
+}
+});
+navLinks.forEach(function(link, i) {
+if (i === current) link.setAttribute('aria-current', 'true');
+else link.removeAttribute('aria-current');
+});
+}
+window.addEventListener('scroll', updateActiveSection, { passive: true });
+updateActiveSection();
+
 // Close on escape
 document.addEventListener('keydown', function(e) {
 if (e.key === 'Escape' && mobileDrawer.classList.contains('open')) {
@@ -3639,6 +3757,20 @@ var filament = document.getElementById('scrollFilament');
 var siteNav = document.getElementById('siteNav');
 var mobileQuickBar = document.getElementById('mobileQuickBar');
 var topSection = document.getElementById('top');
+
+/* Keep anchor jumps and the hero clear of the fixed header, whatever its height */
+function syncNavSpacing() {
+if (!siteNav) return;
+var navH = siteNav.offsetHeight || 84;
+document.documentElement.style.scrollPaddingTop = (navH + 16) + 'px';
+if (topSection) {
+if (window.innerWidth < 1200) topSection.style.paddingTop = (navH + 36) + 'px';
+else topSection.style.paddingTop = '';
+}
+}
+syncNavSpacing();
+window.addEventListener('resize', syncNavSpacing, { passive: true });
+
 window.addEventListener('scroll', function() {
 var scrollTop = window.scrollY || document.documentElement.scrollTop;
 var docHeight = document.documentElement.scrollHeight - window.innerHeight;
