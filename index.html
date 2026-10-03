@@ -43,7 +43,7 @@
             /* Gold — brass & champagne, used as accent only */
             --gold: #B4955F;
             --gold-soft: #D2BC93;
-            --gold-deep: #8A6B3C;
+            --gold-deep: #7E5D33;
 
             /* Lines */
             --line: rgba(180, 149, 95, .38);
@@ -103,7 +103,24 @@
         a { color: inherit; text-decoration: none; }
         button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
         ::selection { background: var(--gold-soft); color: var(--ink); }
-        :focus-visible { outline: 1px solid var(--gold-deep); outline-offset: 4px; }
+        :focus-visible { outline: 2px solid var(--gold-deep); outline-offset: 3px; }
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: 12px;
+            z-index: 200;
+            padding: .8rem 1.2rem;
+            background: var(--ink);
+            color: var(--ivory);
+            border-radius: var(--r);
+            font-family: var(--sans);
+            font-size: .8rem;
+            letter-spacing: .06em;
+            clip-path: inset(50%);
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .skip-link:focus-visible { clip-path: none; overflow: visible; }
 
         h1, h2, h3, .serif {
             font-family: var(--serif);
@@ -206,7 +223,7 @@
             gap: .6rem;
             font-size: var(--fs-small);
             color: var(--ink-2);
-            padding-block: .3rem;
+            padding-block: .45rem;
             background: linear-gradient(var(--gold), var(--gold)) left bottom / 100% 1px no-repeat;
             transition: background-size .45s var(--ease), color .3s;
         }
@@ -264,7 +281,7 @@
             text-transform: uppercase;
             color: var(--muted);
             position: relative;
-            padding-block: .4rem;
+            padding-block: .6rem;
             transition: color .3s;
         }
         .menu a.ml::after {
@@ -279,6 +296,8 @@
         }
         .menu a.ml:hover { color: var(--ink); }
         .menu a.ml:hover::after { transform: scaleX(1); }
+        .menu a.ml[aria-current] { color: var(--ink); }
+        .menu a.ml[aria-current]::after { transform: scaleX(1); }
         .menu .btn { min-height: 44px; padding: .8rem 1.25rem; }
         .menu-foot { display: none; }
 
@@ -583,14 +602,14 @@
         }
         .pacc-head::-webkit-details-marker { display: none; }
         .pacc-num { font-family: var(--serif); font-style: italic; color: var(--gold-deep); font-size: 1.05rem; }
-        .pacc-title { font-family: var(--serif); font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem); line-height: 1; transition: color .3s; }
+        .pacc-title { font-family: var(--serif); font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem); line-height: 1; transition: color .3s; min-width: 0; overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; }
         .pacc-head:hover .pacc-title { color: var(--gold-deep); }
         .pacc-from { font-size: var(--fs-micro); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
         .pacc-arrow { position: relative; width: 14px; height: 14px; align-self: center; justify-self: end; }
         .pacc-arrow::before, .pacc-arrow::after { content: ""; position: absolute; left: 0; top: 50%; width: 14px; height: 1px; background: var(--ink); transition: transform .4s var(--ease); }
         .pacc-arrow::after { transform: rotate(90deg); }
         .pacc-item[open] .pacc-arrow::after { transform: rotate(0); }
-        .pacc-body { padding: 0 0 2rem; }
+        .pacc-body { padding: 0 0 2rem; overflow-x: auto; }
         @media (min-width: 640px) { .pacc-body { padding-left: 3.4rem; } }
 
         .ptable { width: 100%; border-collapse: collapse; font-size: .94rem; }
@@ -741,7 +760,7 @@
            ========================================================= */
         .rev-layout { display: grid; gap: var(--s-5); }
         .rev-score .score { font-family: var(--serif); font-size: clamp(6rem, 4rem + 8vw, 11rem); line-height: .8; letter-spacing: -.04em; }
-        .rev-score .stars { color: var(--gold); letter-spacing: .3em; font-size: .95rem; margin: 1.2rem 0 .5rem; }
+        .rev-score .stars { color: var(--gold-deep); letter-spacing: .3em; font-size: .95rem; margin: 1.2rem 0 .5rem; }
         .rev-score p { color: var(--muted); font-size: var(--fs-small); }
         .rev-score p b { color: var(--ink); font-weight: 500; }
         .rev-list { display: grid; gap: 0 var(--s-5); }
@@ -899,7 +918,7 @@
         .hours { display: grid; grid-template-columns: auto 1fr; gap: .45rem 1.6rem; font-size: .98rem; }
         .hours dt { color: var(--muted); }
         .hours dd { font-variant-numeric: tabular-nums; }
-        .hours .closed { color: var(--stone); }
+        .hours .closed { color: var(--muted); }
         .reach { display: grid; gap: .3rem; font-family: var(--serif); font-size: 1.35rem; }
         .reach a { transition: color .3s; word-break: break-word; }
         .reach a:hover { color: var(--gold-deep); }
@@ -922,8 +941,9 @@
         footer h4 { font-size: var(--fs-micro); font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 1rem; }
         footer ul { list-style: none; display: grid; gap: .55rem; font-size: .92rem; }
         footer ul a:hover, .foot-bot a:hover { color: var(--cream); }
+        footer ul a[aria-current] { color: var(--cream); }
         .soc { display: flex; gap: .6rem; margin-top: 1.2rem; }
-        .soc a { width: 40px; height: 40px; border: 1px solid var(--line-dark); border-radius: 50%; display: grid; place-items: center; color: var(--gold-soft); transition: background .3s, color .3s; }
+        .soc a { width: 44px; height: 44px; border: 1px solid var(--line-dark); border-radius: 50%; display: grid; place-items: center; color: var(--gold-soft); transition: background .3s, color .3s; }
         .soc a:hover { background: var(--cream); color: var(--ink); }
         .foot-bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .8rem 2rem; padding-top: var(--s-3); font-size: .8rem; }
         .foot-bot a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-dark); }
@@ -948,9 +968,10 @@
             color: var(--cream);
             border-radius: var(--r);
             transform: translateY(140%);
-            transition: transform .5s var(--ease);
+            visibility: hidden;
+            transition: transform .5s var(--ease), visibility .5s;
         }
-        .mbar.show { transform: none; }
+        .mbar.show { transform: none; visibility: visible; }
         .mbar > span { font-family: var(--serif); font-size: 1.1rem; }
         .mbar > span small { display: block; font-family: var(--sans); font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-soft); }
         .mbar .btn { min-height: 46px; padding: .7rem 1.1rem; }
@@ -1123,6 +1144,8 @@
 </head>
 <body>
 
+    <a class="skip-link" href="#top">Zum Inhalt springen</a>
+
     <div class="filament" aria-hidden="true"><span id="fil"></span></div>
 
     <!-- ===================== NAV ===================== -->
@@ -1149,7 +1172,7 @@
         </div>
     </nav>
 
-    <main id="top">
+    <main id="top" tabindex="-1">
 
         <!-- ===================== HERO ===================== -->
         <header class="hero" id="hero">
@@ -1455,14 +1478,14 @@
                 <div class="offers-grid">
                     <div class="offer-tile ro">
                         <a class="offer-cover" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener">
-                            <img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_1100/v1788276816/haende_fuesse_gel_manikure_pedikure_cover_cb331804_y0ldu4.png" alt="Gel-Maniküre & Pediküre — 130 CHF statt 160 CHF" loading="lazy" />
+                            <img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_1100/v1788276816/haende_fuesse_gel_manikure_pedikure_cover_cb331804_y0ldu4.png" alt="Gel-Maniküre & Pediküre — 130 CHF statt 160 CHF" width="1100" height="1100" loading="lazy" />
                         </a>
                         <p class="offer-caption">Rundum verwöhnt von Kopf bis Fuss: Gel-Maniküre &amp; Pediküre im Kombipaket — perfekt gepflegte Hände &amp; Füsse zum Vorteilspreis.</p>
                         <a class="tlink" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener">Angebot buchen →</a>
                     </div>
                     <div class="offer-tile ro">
                         <a class="offer-cover" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener">
-                            <img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_1100/v1788276817/wimpern_brauen_wimpernverlaengerung_augenbrauen_cover_fc9748db_yn1c7w.png" alt="Wimpernverlängerung & Augenbrauen — 110 CHF statt 125 CHF" loading="lazy" />
+                            <img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_1100/v1788276817/wimpern_brauen_wimpernverlaengerung_augenbrauen_cover_fc9748db_yn1c7w.png" alt="Wimpernverlängerung & Augenbrauen — 110 CHF statt 125 CHF" width="1100" height="1100" loading="lazy" />
                         </a>
                         <p class="offer-caption">Wach, offen, definiert: Wimpernverlängerung &amp; Augenbrauen im Kombipaket für einen makellosen Blick — jetzt zum Sparpreis.</p>
                         <a class="tlink" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener">Angebot buchen →</a>
@@ -1544,7 +1567,7 @@
                         <span class="kicker">04 — Kundenstimmen</span>
                         <h2 style="margin:1.5rem 0 2.5rem">Vertrauen, <em>das man liest</em></h2>
                         <div class="score">5.0</div>
-                        <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
+                        <div class="stars" role="img" aria-label="5 von 5 Sternen">★★★★★</div>
                         <p><b id="revCount">18</b> verifizierte Google Reviews · 100&nbsp;% Fünf-Sterne</p>
                     </div>
                     <div class="rev-list">
@@ -1750,7 +1773,7 @@
     <!-- Mobile booking bar -->
     <div class="mbar" id="mbar" aria-hidden="true">
         <span><small>Jireh Beauty</small>Freie Termine online</span>
-        <a class="btn btn-on-dark" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener" tabindex="-1"><span>Buchen</span><i class="arr"></i></a>
+        <a class="btn btn-on-dark" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener"><span>Buchen</span><i class="arr"></i></a>
     </div>
 
     <!-- IMPRESSUM MODAL -->
@@ -1787,6 +1810,12 @@
     <script>
         (function() {
             var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var heroVid = document.querySelector('.hero video');
+            if (heroVid && reduce) {
+                heroVid.removeAttribute('autoplay');
+                heroVid.pause();
+                heroVid.preload = 'none';
+            }
             var yr = document.getElementById('year');
             if (yr) yr.textContent = new Date().getFullYear();
 
@@ -1805,6 +1834,15 @@
             burger.addEventListener('click', function() { setMenu(!menu.classList.contains('open')); });
             menu.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { setMenu(false); }); });
             document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false); });
+            document.addEventListener('keydown', function(e) {
+                if (e.key !== 'Tab' || !menu.classList.contains('open')) return;
+                var f = nav.querySelectorAll('a[href], button');
+                if (!f.length) return;
+                var first = f[0], last = f[f.length - 1], cur = document.activeElement;
+                if (!nav.contains(cur)) { e.preventDefault(); first.focus(); return; }
+                if (e.shiftKey && cur === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && cur === last) { e.preventDefault(); first.focus(); }
+            });
 
             /* ---- reveal ---- */
             if ('IntersectionObserver' in window) {
@@ -1893,6 +1931,30 @@
             var hero = document.getElementById('hero');
             var contact = document.getElementById('contact');
 
+            /* ---- scroll spy: mark the section in view ---- */
+            var spySelector = '#menu a.ml[href^="#"], footer ul a[href^="#"]';
+            var spyLinks = document.querySelectorAll(spySelector);
+            var spyIds = [];
+            spyLinks.forEach(function(a) {
+                var id = a.getAttribute('href').slice(1);
+                var el = id ? document.getElementById(id) : null;
+                if (el && el.tagName !== 'A' && spyIds.indexOf(id) === -1) spyIds.push(id);
+            });
+            function setSpy() {
+                var marker = window.scrollY + window.innerHeight * 0.35;
+                var active = '', best = -Infinity;
+                spyIds.forEach(function(id) {
+                    var el = document.getElementById(id);
+                    if (!el) return;
+                    var top = el.getBoundingClientRect().top + window.scrollY;
+                    if (top <= marker && top >= best) { best = top; active = id; }
+                });
+                spyLinks.forEach(function(a) {
+                    if (active && a.getAttribute('href') === '#' + active) a.setAttribute('aria-current', 'true');
+                    else a.removeAttribute('aria-current');
+                });
+            }
+
             /* ---- scroll loop ---- */
             var fil = document.getElementById('fil');
             var ticking = false;
@@ -1901,6 +1963,7 @@
                 var docH = document.documentElement.scrollHeight - window.innerHeight;
                 fil.style.transform = 'scaleX(' + (docH > 0 ? st / docH : 0) + ')';
                 if (!menu.classList.contains('open')) nav.classList.toggle('solid', st > 30);
+                setSpy();
 
                 var vh = window.innerHeight;
                 if (words.length) {
@@ -1954,6 +2017,15 @@
             closeBtn.addEventListener('click', closeImp);
             overlay.addEventListener('click', function(e) { if (e.target === overlay) closeImp(); });
             document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeImp(); });
+            document.addEventListener('keydown', function(e) {
+                if (e.key !== 'Tab' || !overlay.classList.contains('active')) return;
+                var f = overlay.querySelectorAll('a[href], button');
+                if (!f.length) return;
+                var first = f[0], last = f[f.length - 1], cur = document.activeElement;
+                if (!overlay.contains(cur)) { e.preventDefault(); first.focus(); return; }
+                if (e.shiftKey && cur === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && cur === last) { e.preventDefault(); first.focus(); }
+            });
         })();
 
         /* ---- COOKIE BANNER ---- */
