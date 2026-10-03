@@ -867,6 +867,159 @@ color: var(--ink-primary);
 line-height: 1.2;
 }
 /* ==========================================================================
+3b. STUDIO TOUR VIDEO (CINEMATIC 16:9)
+========================================================================== */
+.studio-tour-section {
+position: relative;
+background-color: var(--bg-dark);
+color: var(--ink-light);
+padding-block: clamp(3.5rem, 7vw, 6rem);
+overflow: hidden;
+}
+/* Warm gold glow behind the frame */
+.studio-tour-section::before {
+content: "";
+position: absolute;
+top: -20%;
+left: 50%;
+width: min(760px, 90vw);
+height: 60%;
+transform: translateX(-50%);
+background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+pointer-events: none;
+}
+/* Dark section: reuse the light-on-dark tokens from .bg-dark-wrap */
+.studio-tour-section .kicker {
+color: var(--gold-light);
+}
+.studio-tour-section h2 em {
+color: var(--gold-light);
+}
+.studio-tour-section .lead {
+color: var(--ink-light-muted);
+}
+.studio-tour-header {
+display: grid;
+gap: 1.25rem;
+margin-bottom: clamp(1.75rem, 3vw, 2.75rem);
+position: relative;
+}
+@media (min-width: 900px) {
+.studio-tour-header {
+grid-template-columns: 1fr auto;
+align-items: flex-end;
+}
+}
+.studio-tour-frame {
+position: relative;
+width: 100%;
+aspect-ratio: 16 / 9;
+border-radius: var(--radius-md);
+overflow: hidden;
+background: var(--bg-dark-card);
+border: 1px solid var(--border-dark);
+box-shadow: var(--shadow-dark);
+}
+.studio-tour-frame video {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+}
+/* Softer, taller frame while the phone is held upright */
+@media (max-width: 767px) {
+.studio-tour-frame {
+aspect-ratio: 16 / 11;
+}
+}
+/* Cinematic letterbox bars + play control */
+.studio-tour-overlay {
+position: absolute;
+inset: 0;
+background: linear-gradient(180deg, rgba(23, 20, 18, 0.35) 0%, transparent 30%, transparent 55%, rgba(23, 20, 18, 0.75) 100%);
+pointer-events: none;
+}
+.studio-tour-caption {
+position: absolute;
+left: clamp(1rem, 3vw, 2rem);
+right: clamp(1rem, 3vw, 2rem);
+bottom: clamp(1rem, 3vw, 1.75rem);
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: space-between;
+gap: 0.75rem 1.25rem;
+pointer-events: none;
+}
+.studio-tour-caption strong {
+font-family: var(--font-serif);
+font-weight: 400;
+font-size: clamp(1.1rem, 0.9rem + 0.9vw, 1.7rem);
+color: #FFFFFF;
+display: block;
+}
+.studio-tour-caption span {
+font-size: 0.72rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(--gold-light);
+}
+.studio-tour-controls {
+display: flex;
+align-items: center;
+gap: 0.75rem;
+pointer-events: auto;
+}
+.studio-tour-toggle {
+width: 46px;
+height: 46px;
+border-radius: 50%;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+background: rgba(250, 247, 242, 0.12);
+border: 1px solid var(--border-dark);
+color: var(--ink-light);
+font-size: 0.85rem;
+backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+transition: all var(--transition-smooth);
+flex-shrink: 0;
+}
+.studio-tour-toggle:hover {
+background: var(--gold);
+border-color: var(--gold);
+color: #FFFFFF;
+transform: translateY(-2px);
+}
+.studio-tour-facts {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 1.25rem;
+margin-top: clamp(1.75rem, 3vw, 2.5rem);
+padding-top: 1.75rem;
+border-top: 1px solid var(--border-dark);
+}
+@media (min-width: 768px) {
+.studio-tour-facts {
+grid-template-columns: repeat(4, 1fr);
+}
+}
+.studio-tour-fact dt {
+font-size: var(--fs-micro);
+font-weight: 600;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(--gold-light);
+margin-bottom: 0.3rem;
+}
+.studio-tour-fact dd {
+font-family: var(--font-serif);
+font-size: clamp(1.1rem, 0.95rem + 0.4vw, 1.45rem);
+color: var(--ink-light);
+line-height: 1.25;
+}
+/* ==========================================================================
 4. PHILOSOPHY / MANIFESTO STATEMENT
 ========================================================================== */
 .statement-section {
@@ -2383,14 +2536,15 @@ NAVIGATION BAR
 <!-- Mobile Drawer Menu -->
 <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
 <div class="mobile-nav-links">
-<a class="mobile-link" href="#services">Leistungen <span>01</span></a>
-<a class="mobile-link" href="#planner">Verwöhn-Planer <span>02</span></a>
-<a class="mobile-link" href="#preise">Preise & Menü <span>03</span></a>
-<a class="mobile-link" href="#offers">Kombi-Pakete <span>04</span></a>
-<a class="mobile-link" href="#gallery">Portfolio <span>05</span></a>
-<a class="mobile-link" href="#reviews">Kundenstimmen <span>06</span></a>
-<a class="mobile-link" href="#about">Über Belky <span>07</span></a>
-<a class="mobile-link" href="#contact">Anfahrt & Kontakt <span>08</span></a>
+<a class="mobile-link" href="#studiotour">Studio-Rundgang <span>01</span></a>
+<a class="mobile-link" href="#services">Leistungen <span>02</span></a>
+<a class="mobile-link" href="#planner">Verwöhn-Planer <span>03</span></a>
+<a class="mobile-link" href="#preise">Preise & Menü <span>04</span></a>
+<a class="mobile-link" href="#offers">Kombi-Pakete <span>05</span></a>
+<a class="mobile-link" href="#gallery">Portfolio <span>06</span></a>
+<a class="mobile-link" href="#reviews">Kundenstimmen <span>07</span></a>
+<a class="mobile-link" href="#about">Über Belky <span>08</span></a>
+<a class="mobile-link" href="#contact">Anfahrt & Kontakt <span>09</span></a>
 </div>
 <div class="mobile-drawer-bottom">
 <div class="status-pill drawer-status" id="liveStatusPillDrawer">
@@ -2464,6 +2618,55 @@ Maniküre, Pediküre, langlebige Kunstnägel, Wimpernverlängerung & Brow Lamina
 </div>
 </div>
 </div>
+</div>
+</section>
+<!-- ==================== STUDIO TOUR VIDEO ==================== -->
+<section class="studio-tour-section" id="studiotour" aria-label="Studio-Rundgang">
+<div class="container">
+<div class="studio-tour-header">
+<div>
+<span class="kicker">Studio-Rundgang · Uster</span>
+<h2>So sieht es bei <em>uns aus</em></h2>
+</div>
+<p class="lead" style="max-width:40ch;">
+Ein kurzer Rundgang durch den Behandlungsraum: ruhige Atmosphäre, sterilisierte Werkzeuge und ein Platz, an dem nur du im Mittelpunkt stehst.
+</p>
+</div>
+<div class="studio-tour-frame">
+<video id="studioTourVideo" poster="https://res.cloudinary.com/dnrvauviq/video/upload/so_1/f_auto,q_auto,w_1600/v1791068867/Create_hero_video_for_website_20261004010656_pqgcre.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Rundgang durch das Jireh Beauty Studio in Uster">
+<source src="https://res.cloudinary.com/dnrvauviq/video/upload/f_auto,q_auto,w_1600/v1791068867/Create_hero_video_for_website_20261004010656_pqgcre.mp4" type="video/mp4" />
+</video>
+<div class="studio-tour-overlay"></div>
+<div class="studio-tour-caption">
+<div>
+<strong>Dein Platz im Jireh Beauty Studio</strong>
+<span>Industriestrasse 27 · 8610 Uster</span>
+</div>
+<div class="studio-tour-controls">
+<button class="studio-tour-toggle" id="studioTourToggle" type="button" aria-label="Video pausieren">
+<span id="studioTourToggleIcon">❙❙</span>
+</button>
+</div>
+</div>
+</div>
+<dl class="studio-tour-facts">
+<div class="studio-tour-fact">
+<dt>Atmosphäre</dt>
+<dd>Ruhig & privat</dd>
+</div>
+<div class="studio-tour-fact">
+<dt>Hygiene</dt>
+<dd>Steril pro Termin</dd>
+</div>
+<div class="studio-tour-fact">
+<dt>Betreuung</dt>
+<dd>1 Kundin / Slot</dd>
+</div>
+<div class="studio-tour-fact">
+<dt>Termin</dt>
+<dd>Online 24/7</dd>
+</div>
+</dl>
 </div>
 </section>
 <!-- ==================== STATEMENT / PHILOSOPHIE ==================== -->
@@ -3600,7 +3803,9 @@ initScrollEffects();
 initGallery();
 // 5. Interactive Beauty Planner
 initBeautyPlanner();
-// 6. Cookie Notice
+// 6. Studio Tour Video Controls
+initStudioTourVideo();
+// 7. Cookie Notice
 initCookieBanner();
 });
 /* ----------------------------------------------------
@@ -3757,6 +3962,8 @@ var filament = document.getElementById('scrollFilament');
 var siteNav = document.getElementById('siteNav');
 var mobileQuickBar = document.getElementById('mobileQuickBar');
 var topSection = document.getElementById('top');
+var mobileDrawerEl = document.getElementById('mobileDrawer');
+var burgerEl = document.getElementById('burgerBtn');
 
 /* Keep anchor jumps and the hero clear of the fixed header, whatever its height */
 function syncNavSpacing() {
@@ -3781,7 +3988,9 @@ siteNav.classList.toggle('scrolled', scrollTop > 25);
 }
 if (mobileQuickBar && topSection) {
 var heroBottom = topSection.getBoundingClientRect().bottom;
-mobileQuickBar.classList.toggle('visible', heroBottom < 0);
+var drawerOpen = mobileDrawerEl && mobileDrawerEl.classList.contains('open');
+var burgerVisible = burgerEl && burgerEl.offsetParent !== null;
+mobileQuickBar.classList.toggle('visible', heroBottom < 0 && burgerVisible && !drawerOpen);
 }
 }, { passive: true });
 }
@@ -4022,7 +4231,53 @@ document.body.style.overflow = '';
 }
 }
 /* ----------------------------------------------------
-11. Cookie Banner
+11. Studio Tour Video (Play / Pause)
+---------------------------------------------------- */
+function initStudioTourVideo() {
+var video = document.getElementById('studioTourVideo');
+var toggle = document.getElementById('studioTourToggle');
+var icon = document.getElementById('studioTourToggleIcon');
+if (!video || !toggle || !icon) return;
+
+function paint() {
+var playing = !video.paused && !video.ended;
+icon.textContent = playing ? '❙❙' : '▶';
+toggle.setAttribute('aria-label', playing ? 'Video pausieren' : 'Video abspielen');
+}
+
+toggle.addEventListener('click', function() {
+if (video.paused) {
+delete video.dataset.userPaused;
+video.play().catch(function() {});
+} else {
+/* Remember a deliberate pause so scrolling does not restart the video */
+video.dataset.userPaused = 'true';
+video.pause();
+}
+});
+
+video.addEventListener('play', paint);
+video.addEventListener('pause', paint);
+
+/* Pause while the section is off-screen so the page stays light */
+if ('IntersectionObserver' in window) {
+var tourObserver = new IntersectionObserver(function(entries) {
+entries.forEach(function(entry) {
+if (entry.isIntersecting) {
+if (!video.dataset.userPaused) video.play().catch(function() {});
+} else if (!video.paused) {
+video.dataset.autoPaused = 'true';
+video.pause();
+}
+});
+}, { threshold: 0.25 });
+tourObserver.observe(video);
+}
+
+paint();
+}
+/* ----------------------------------------------------
+12. Cookie Banner
 ---------------------------------------------------- */
 function initCookieBanner() {
 var banner = document.getElementById('cookiePopup');
