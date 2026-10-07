@@ -3990,7 +3990,9 @@ if (mobileQuickBar && topSection) {
 var heroBottom = topSection.getBoundingClientRect().bottom;
 var drawerOpen = mobileDrawerEl && mobileDrawerEl.classList.contains('open');
 var burgerVisible = burgerEl && burgerEl.offsetParent !== null;
-mobileQuickBar.classList.toggle('visible', heroBottom < 0 && burgerVisible && !drawerOpen);
+var footerEl = document.querySelector('.site-footer');
+var footerVisible = footerEl && footerEl.getBoundingClientRect().top < window.innerHeight;
+mobileQuickBar.classList.toggle('visible', heroBottom < 0 && burgerVisible && !drawerOpen && !footerVisible);
 }
 }, { passive: true });
 }
