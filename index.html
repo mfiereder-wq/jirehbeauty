@@ -699,36 +699,33 @@ color: var(--ink-secondary);
 ========================================================================== */
 .hero-section {
 position: relative;
-padding-top: clamp(7.5rem, 12vw, 10rem);
-padding-bottom: clamp(4rem, 8vw, 6.5rem);
+padding-top: clamp(7.5rem, 12vw, 9.5rem);
+padding-bottom: clamp(3rem, 6vw, 5rem);
 overflow: hidden;
+isolation: isolate;
 }
+/* Warm gold aura behind the centred stage, sand glow beneath it */
 .hero-section::before {
 content: "";
 position: absolute;
-top: 0;
-right: 0;
-bottom: 0;
-width: 44%;
-background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(243, 236, 226, 0.4) 100%);
-border-left: 1px solid var(--border-hairline);
+inset: 0;
+background:
+radial-gradient(58% 40% at 50% 4%, var(--gold-glow) 0%, rgba(184, 150, 94, 0) 68%),
+radial-gradient(72% 46% at 50% 80%, rgba(243, 236, 226, 0.95) 0%, rgba(243, 236, 226, 0) 76%);
 z-index: -1;
 pointer-events: none;
 }
-@media (max-width: 960px) {
-.hero-section::before {
-display: none;
+.hero-lead {
+max-width: 54rem;
+margin-inline: auto;
+text-align: center;
 }
-}
-.hero-grid {
+.hero-stage {
+position: relative;
 display: grid;
-gap: clamp(2.5rem, 5vw, 5rem);
-align-items: center;
-}
-@media (min-width: 960px) {
-.hero-grid {
-grid-template-columns: 1.1fr 0.9fr;
-}
+grid-template-columns: minmax(0, 1fr);
+justify-items: center;
+margin-top: clamp(2.5rem, 6vw, 4.5rem);
 }
 .hero-badge-wrap {
 display: inline-flex;
@@ -758,30 +755,51 @@ line-height: 0.92;
 margin-bottom: 1.8rem;
 letter-spacing: -0.025em;
 }
-.hero-title .line-indent {
+.hero-title-line {
 display: block;
-padding-left: clamp(1rem, 5vw, 4.5rem);
+}
+.hero-title-line--quiet {
+font-style: italic;
+color: var(--gold-deep);
 }
 .hero-text {
 font-size: var(--fs-lead);
 color: var(--ink-secondary);
-margin-bottom: 2.5rem;
-max-width: 45ch;
+margin: 0 auto 2.5rem;
+max-width: 52ch;
 line-height: 1.65;
 }
 .hero-cta-group {
 display: flex;
 flex-wrap: wrap;
 align-items: center;
-gap: 1rem 1.8rem;
-margin-bottom: 3.5rem;
+justify-content: center;
+gap: 1rem 1.4rem;
 }
-/* Hero Media Frame */
-.hero-media-wrap {
+/* Hero arch niche flanked by two offset slats */
+@media (min-width: 1080px) {
+.hero-stage {
+grid-template-columns: minmax(0, 14rem) minmax(19rem, 24rem) minmax(0, 14rem);
+justify-content: center;
+align-items: center;
+gap: clamp(1.5rem, 3vw, 2.75rem);
+}
+}
+.hero-arch-wrap {
 position: relative;
-max-width: 520px;
-margin-inline: auto;
+width: min(100%, 23rem);
+}
+@media (min-width: 1080px) {
+.hero-arch-wrap {
 width: 100%;
+}
+}
+.hero-arch-ring {
+position: absolute;
+inset: -15px;
+border-radius: 9999px 9999px var(--radius-md) var(--radius-md);
+border: 1px solid var(--border-hairline);
+pointer-events: none;
 }
 .hero-arch {
 position: relative;
@@ -797,12 +815,48 @@ width: 100%;
 height: 100%;
 object-fit: cover;
 }
+.hero-arch-veil {
+position: absolute;
+inset: 0;
+background: linear-gradient(180deg, rgba(23, 20, 18, 0) 52%, rgba(23, 20, 18, 0.42) 100%);
+pointer-events: none;
+}
+/* Narrow arch slats that echo the niche on wide screens */
+.hero-satellite {
+display: none;
+margin: 0;
+width: min(100%, 14rem);
+border-radius: 9999px 9999px var(--radius-md) var(--radius-md);
+overflow: hidden;
+border: 1px solid var(--border-hairline);
+background: var(--bg-surface-2);
+box-shadow: 0 26px 60px -26px rgba(28, 24, 21, 0.28);
+}
+.hero-satellite img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+@media (min-width: 1080px) {
+.hero-satellite {
+display: block;
+}
+.hero-satellite--left {
+aspect-ratio: 3 / 4.1;
+transform: translateY(2.25rem);
+}
+.hero-satellite--right {
+aspect-ratio: 3 / 3.4;
+transform: translateY(-2.25rem);
+}
+}
 .hero-floating-card {
 position: absolute;
-bottom: -24px;
-left: -20px;
+bottom: -26px;
+left: 50%;
+transform: translateX(-50%);
 background: #FFFFFF;
-padding: 1.2rem 1.5rem;
+padding: 1.1rem 1.4rem;
 border-radius: var(--radius-md);
 border: 1px solid var(--border-hairline);
 box-shadow: var(--shadow-hover);
@@ -810,12 +864,13 @@ display: flex;
 align-items: center;
 gap: 1rem;
 z-index: 2;
+white-space: nowrap;
 }
 @media (max-width: 540px) {
 .hero-floating-card {
-left: 10px;
 bottom: -20px;
 padding: 0.9rem 1.1rem;
+gap: 0.75rem;
 }
 }
 .hero-floating-rating {
@@ -843,13 +898,19 @@ color: var(--ink-muted);
 .hero-metrics {
 display: grid;
 grid-template-columns: repeat(2, 1fr);
-gap: 1.5rem;
+gap: 1.5rem 1rem;
+margin-top: clamp(4rem, 7vw, 5.5rem);
 padding-top: 2rem;
 border-top: 1px solid var(--border-hairline);
+text-align: center;
 }
 @media (min-width: 768px) {
 .hero-metrics {
 grid-template-columns: repeat(4, 1fr);
+gap: 0;
+}
+.hero-metrics .metric-item + .metric-item {
+border-left: 1px solid var(--border-soft);
 }
 }
 .metric-item dt {
@@ -865,6 +926,45 @@ font-family: var(--font-serif);
 font-size: clamp(1.2rem, 1rem + 0.4vw, 1.55rem);
 color: var(--ink-primary);
 line-height: 1.2;
+}
+/* Slow treatment ticker closing the hero */
+.hero-marquee {
+margin-top: clamp(2.5rem, 5vw, 4rem);
+padding-block: 0.85rem;
+border-block: 1px solid var(--border-soft);
+overflow: hidden;
+mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+-webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+.hero-marquee-track {
+display: flex;
+align-items: center;
+width: max-content;
+animation: heroMarquee 42s linear infinite;
+}
+.hero-marquee-item,
+.hero-marquee-dot {
+font-size: var(--fs-micro);
+font-weight: 600;
+letter-spacing: 0.22em;
+text-transform: uppercase;
+white-space: nowrap;
+}
+.hero-marquee-item {
+color: var(--ink-muted);
+padding-inline: 1.1rem;
+}
+.hero-marquee-dot {
+color: var(--gold);
+}
+@keyframes heroMarquee {
+from { transform: translateX(0); }
+to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+.hero-marquee-track {
+animation: none;
+}
 }
 /* ==========================================================================
 3b. STUDIO TOUR VIDEO (CINEMATIC 16:9)
@@ -1834,23 +1934,89 @@ color: var(--ink-secondary);
 line-height: 1.6;
 }
 /* ==========================================================================
-11. TIKTOK & INSTAGRAM REELS (DARK LUXURY SECTION)
+11. STUDIO MOMENTE — CURVED FILM WALL & REEL STRIP (DARK LUXURY)
 ========================================================================== */
-.reels-grid {
+/* One row of image tiles bent round the inside of a cylinder: the JS cuts
+   every tile into vertical slices and turns each slice its share of the arc.
+   The band is the query container, so all of its lengths scale with it. */
+.reel-band {
+position: relative;
+height: clamp(20rem, 46vh, 30rem);
+margin-top: clamp(2rem, 4vw, 3rem);
+overflow: hidden;
+background: var(--bg-dark);
+container-type: size;
+}
+#reels .sec-header {
+margin-bottom: clamp(1.5rem, 3vw, 2rem);
+}
+.reels-actions {
+display: flex;
+flex-wrap: wrap;
+gap: 1rem;
+}
+/* Only an edge vignette: the band belongs to the images, no text sits on it */
+.reel-band-scrim {
+position: absolute;
+inset: 0;
+z-index: 1;
+pointer-events: none;
+background: linear-gradient(180deg, var(--bg-dark) 0%, rgba(23, 20, 18, 0) 15%, rgba(23, 20, 18, 0) 85%, var(--bg-dark) 100%);
+}
+.reel-band-stage {
+position: absolute;
+inset: 0;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.6s ease;
+}
+.reel-band-stage.is-ready {
+opacity: 1;
+}
+.reel-band-tile {
+position: absolute;
+}
+.reel-band-slice {
+position: absolute;
+top: 0;
+overflow: hidden;
+background: var(--bg-dark-surface);
+}
+.reel-band-slice--first {
+border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+.reel-band-slice--last {
+border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+.reel-band-slice img {
+position: absolute;
+top: 0;
+max-width: none;
+object-fit: cover;
+}
+.reels-strip {
+margin-top: clamp(2.5rem, 5vw, 3.5rem);
 display: grid;
 grid-template-columns: repeat(2, 1fr);
+gap: 1rem;
+}
+@media (min-width: 640px) {
+.reels-strip {
+grid-template-columns: repeat(3, 1fr);
 gap: 1.25rem;
 }
-@media (min-width: 768px) {
-.reels-grid {
-grid-template-columns: repeat(3, 1fr);
-gap: 1.5rem;
 }
-}
-@media (min-width: 1100px) {
-.reels-grid {
+@media (min-width: 1080px) {
+.reels-strip {
 grid-template-columns: repeat(6, 1fr);
+gap: 1.25rem;
 }
+}
+.reels-hint {
+margin-top: 1.5rem;
+font-size: 0.8rem;
+color: var(--ink-light-muted);
+text-align: center;
 }
 .reel-card {
 position: relative;
@@ -1861,6 +2027,11 @@ background: var(--bg-dark-card);
 border: 1px solid var(--border-dark);
 cursor: pointer;
 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+transition: transform var(--transition-smooth), border-color var(--transition-smooth);
+}
+.reel-card:hover {
+transform: translateY(-4px);
+border-color: var(--gold);
 }
 .reel-card video {
 width: 100%;
@@ -1876,6 +2047,38 @@ flex-direction: column;
 justify-content: flex-end;
 padding: 1rem;
 pointer-events: none;
+}
+.reel-play-badge {
+position: absolute;
+inset: 0;
+margin: auto;
+width: 2.6rem;
+height: 2.6rem;
+border-radius: var(--radius-pill);
+display: grid;
+place-items: center;
+font-size: 0.7rem;
+color: var(--ink-light);
+background: rgba(23, 20, 18, 0.55);
+border: 1px solid var(--border-dark);
+backdrop-filter: blur(4px);
+-webkit-backdrop-filter: blur(4px);
+opacity: 0.95;
+pointer-events: none;
+transition: opacity var(--transition-smooth);
+}
+.reel-play-badge::before {
+content: "▶";
+}
+.reel-card.playing .reel-play-badge {
+opacity: 0;
+}
+.reel-card:hover .reel-play-badge,
+.reel-card.playing:hover .reel-play-badge {
+opacity: 0.95;
+}
+.reel-card.playing:hover .reel-play-badge::before {
+content: "❙❙";
 }
 .reel-channel-label {
 font-size: 0.7rem;
@@ -2565,14 +2768,14 @@ MAIN CONTENT
 <!-- ==================== HERO ==================== -->
 <section class="hero-section" id="top">
 <div class="container">
-<div class="hero-grid">
-<div class="hero-copy">
+<div class="hero-lead">
 <div class="hero-badge-wrap">
 <span class="hero-badge-icon">✦</span>
 <span class="hero-badge-text">Privates Boutique-Studio · Uster</span>
 </div>
 <h1 class="hero-title">
-Jireh<span class="line-indent"><em>Beauty</em> Studio</span>
+<span class="hero-title-line">Jireh <em>Beauty</em></span>
+<span class="hero-title-line hero-title-line--quiet">Studio</span>
 </h1>
 <p class="hero-text">
 Maniküre, Pediküre, langlebige Kunstnägel, Wimpernverlängerung & Brow Lamination. Persönlich von Belky mit Hingabe, sterilen Werkzeugen und einer Kundin pro Slot.
@@ -2585,6 +2788,29 @@ Maniküre, Pediküre, langlebige Kunstnägel, Wimpernverlängerung & Brow Lamina
 <a class="btn-outline" href="https://wa.me/41772216088?text=Hallo%20Belky%2C%20ich%20m%C3%B6chte%20einen%20Termin%20anfragen." target="_blank" rel="noopener">
 <span>WhatsApp Express</span>
 </a>
+</div>
+</div>
+<div class="hero-stage">
+<figure class="hero-satellite hero-satellite--left">
+<img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_jpg,q_auto,w_700/v1779219918/IMG-20260428-WA0025_edjwsv.jpg" alt="Wimpernlifting im Jireh Beauty Studio" loading="lazy" decoding="async" />
+</figure>
+<div class="hero-arch-wrap">
+<div class="hero-arch-ring" aria-hidden="true"></div>
+<div class="hero-arch">
+<video src="https://res.cloudinary.com/dtzpydtdg/video/upload/v1780513802/lv_7579834588508261685_20260601001459_rwfocd.webm" autoplay muted loop playsinline poster="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_900/v1779219915/IMG-20260518-WA0002_tkzqv7.jpg" aria-label="Einblick ins Studio Jireh Beauty Uster"></video>
+<div class="hero-arch-veil" aria-hidden="true"></div>
+</div>
+<div class="hero-floating-card">
+<div class="hero-floating-rating">5.0</div>
+<div class="hero-floating-meta">
+<div class="hero-floating-stars">★★★★★</div>
+<span class="hero-floating-label">18 verifizierte Reviews</span>
+</div>
+</div>
+</div>
+<figure class="hero-satellite hero-satellite--right">
+<img src="https://res.cloudinary.com/dtzpydtdg/image/upload/f_jpg,q_auto,w_700/v1779219916/IMG-20260428-WA0059_qimnwk.jpg" alt="Gellack Finish aus dem Studio" loading="lazy" decoding="async" />
+</figure>
 </div>
 <dl class="hero-metrics">
 <div class="metric-item">
@@ -2604,18 +2830,9 @@ Maniküre, Pediküre, langlebige Kunstnägel, Wimpernverlängerung & Brow Lamina
 <dd>24/7 Treatwell</dd>
 </div>
 </dl>
-</div>
-<div class="hero-media-wrap">
-<div class="hero-arch">
-<video src="https://res.cloudinary.com/dtzpydtdg/video/upload/v1780513802/lv_7579834588508261685_20260601001459_rwfocd.webm" autoplay muted loop playsinline poster="https://res.cloudinary.com/dtzpydtdg/image/upload/f_auto,q_auto,w_900/v1779219915/IMG-20260518-WA0002_tkzqv7.jpg" aria-label="Einblick ins Studio Jireh Beauty Uster"></video>
-</div>
-<div class="hero-floating-card">
-<div class="hero-floating-rating">5.0</div>
-<div class="hero-floating-meta">
-<div class="hero-floating-stars">★★★★★</div>
-<span class="hero-floating-label">18 verifizierte Reviews</span>
-</div>
-</div>
+<div class="hero-marquee" aria-hidden="true">
+<div class="hero-marquee-track">
+<span class="hero-marquee-item">Maniküre</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Pediküre</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Kunstnägel</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Lash Lifting</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Wimpernverlängerung</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Brow Lamination</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Spa-Pediküre</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Nail Art</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Maniküre</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Pediküre</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Kunstnägel</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Lash Lifting</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Wimpernverlängerung</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Brow Lamination</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Spa-Pediküre</span><span class="hero-marquee-dot">✦</span><span class="hero-marquee-item">Nail Art</span><span class="hero-marquee-dot">✦</span>
 </div>
 </div>
 </div>
@@ -3348,7 +3565,7 @@ Wir analysieren Form, Nagelgesundheit und deinen Alltag vor Beginn der Behandlun
 </div>
 </div>
 </section>
-<!-- ==================== TIKTOK & REELS (DARK LUXURY) ==================== -->
+<!-- ==================== STUDIO MOMENTE (CURVED FILM WALL) ==================== -->
 <section class="section bg-dark-wrap" id="reels">
 <div class="container">
 <div class="sec-header sec-header--split">
@@ -3356,48 +3573,68 @@ Wir analysieren Form, Nagelgesundheit und deinen Alltag vor Beginn der Behandlun
 <span class="kicker">Studio Momente</span>
 <h2>Ungefilterte <em>Video-Einblicke</em></h2>
 </div>
-<a class="btn-outline" href="https://www.tiktok.com/@jirehbeautystudio7" target="_blank" rel="noopener">
+<p class="lead">Echte Aufnahmen aus dem Behandlungsraum an der Industriestrasse – ohne Filter, ohne Stockfotos.</p>
+</div>
+<div class="reels-actions">
+<a class="btn-luxury" href="https://www.tiktok.com/@jirehbeautystudio7" target="_blank" rel="noopener">
 <span>TikTok @jirehbeautystudio7</span>
+<span class="arrow-icon">→</span>
+</a>
+<a class="btn-outline" href="#studiotour">
+<span>Studio-Rundgang ansehen</span>
 </a>
 </div>
-<div class="reels-grid">
-<div class="reel-card" onclick="toggleReelPlay(this)">
+</div>
+<div class="reel-band" id="reelBand">
+<div class="reel-band-stage" id="reelBandStage" aria-hidden="true"></div>
+<div class="reel-band-scrim" aria-hidden="true"></div>
+</div>
+<div class="container">
+<div class="reels-strip">
+<button type="button" class="reel-card" onclick="toggleReelPlay(this)" aria-label="Reel abspielen: Nail Prep">
 <video data-src="https://res.cloudinary.com/dtzpydtdg/video/upload/v1783541300/ssstik.io_1783540992743_uqjzxu.webm" loop playsinline muted></video>
+<span class="reel-play-badge" aria-hidden="true"></span>
 <div class="reel-play-overlay">
 <span class="reel-channel-label">Nail Prep</span>
 </div>
-</div>
-<div class="reel-card" onclick="toggleReelPlay(this)">
+</button>
+<button type="button" class="reel-card" onclick="toggleReelPlay(this)" aria-label="Reel abspielen: Glossy Finish">
 <video data-src="https://res.cloudinary.com/dtzpydtdg/video/upload/v1783541300/ssstik.io_1783540907729_hqwewa.webm" loop playsinline muted></video>
+<span class="reel-play-badge" aria-hidden="true"></span>
 <div class="reel-play-overlay">
 <span class="reel-channel-label">Glossy Finish</span>
 </div>
-</div>
-<div class="reel-card" onclick="toggleReelPlay(this)">
+</button>
+<button type="button" class="reel-card" onclick="toggleReelPlay(this)" aria-label="Reel abspielen: Lash Lifting">
 <video data-src="https://res.cloudinary.com/dtzpydtdg/video/upload/v1783541301/ssstik.io_1783540782266_hc7gr8.webm" loop playsinline muted></video>
+<span class="reel-play-badge" aria-hidden="true"></span>
 <div class="reel-play-overlay">
 <span class="reel-channel-label">Lash Lifting</span>
 </div>
-</div>
-<div class="reel-card" onclick="toggleReelPlay(this)">
+</button>
+<button type="button" class="reel-card" onclick="toggleReelPlay(this)" aria-label="Reel abspielen: Brow Styling">
 <video data-src="https://res.cloudinary.com/dtzpydtdg/video/upload/v1783541301/ssstik.io_1783540850005_awzqfj.webm" loop playsinline muted></video>
+<span class="reel-play-badge" aria-hidden="true"></span>
 <div class="reel-play-overlay">
 <span class="reel-channel-label">Brow Styling</span>
 </div>
-</div>
-<div class="reel-card" onclick="toggleReelPlay(this)">
+</button>
+<button type="button" class="reel-card" onclick="toggleReelPlay(this)" aria-label="Reel abspielen: Studio Uster">
 <video data-src="https://res.cloudinary.com/dtzpydtdg/video/upload/v1788170943/VID-20260829-WA0000_hm6pqe.mp4" loop playsinline muted></video>
+<span class="reel-play-badge" aria-hidden="true"></span>
 <div class="reel-play-overlay">
 <span class="reel-channel-label">Studio Uster</span>
 </div>
-</div>
-<div class="reel-card" onclick="toggleReelPlay(this)">
+</button>
+<button type="button" class="reel-card" onclick="toggleReelPlay(this)" aria-label="Reel abspielen: Spa Pediküre">
 <video data-src="https://res.cloudinary.com/dtzpydtdg/video/upload/v1788170943/VID-20260829-WA0001_jtaroq.mp4" loop playsinline muted></video>
+<span class="reel-play-badge" aria-hidden="true"></span>
 <div class="reel-play-overlay">
 <span class="reel-channel-label">Spa Pediküre</span>
 </div>
+</button>
 </div>
-</div>
+<p class="reels-hint">Tippe eine Karte an, um den Clip mit Ton abzuspielen – oder folge dem Studio auf TikTok.</p>
 </div>
 </section>
 <!-- ==================== REVIEWS ==================== -->
@@ -3805,7 +4042,17 @@ initGallery();
 initBeautyPlanner();
 // 6. Studio Tour Video Controls
 initStudioTourVideo();
-// 7. Cookie Notice
+// 7. Curved film wall behind the Studio Momente headline
+initCurvedBand(document.getElementById('reelBand'), REEL_BAND_IMAGES, {
+speed: 4.5,
+tileHeight: 30,
+aspectRatio: 16 / 9,
+gap: 7,
+axis: 56,
+curve: 78,
+fade: 14
+});
+// 8. Cookie Notice
 initCookieBanner();
 });
 /* ----------------------------------------------------
@@ -4166,6 +4413,13 @@ video.pause();
 video.muted = true;
 }
 }
+// Keep the badge icon in step with what the clip is actually doing
+document.querySelectorAll('.reel-card').forEach(function(card) {
+var reelVideo = card.querySelector('video');
+if (!reelVideo) return;
+reelVideo.addEventListener('play', function() { card.classList.add('playing'); });
+reelVideo.addEventListener('pause', function() { card.classList.remove('playing'); });
+});
 // Lazy load videos in reels
 if ('IntersectionObserver' in window) {
 var reelObserver = new IntersectionObserver(function(entries) {
@@ -4184,6 +4438,249 @@ entry.target.pause();
 document.querySelectorAll('.reel-card video').forEach(function(v) {
 reelObserver.observe(v);
 });
+}
+/* ----------------------------------------------------
+7b. Curved Film Wall
+A CSS box cannot bend, so every tile is cut into SLICES vertical strips,
+each a flat facet of a cylinder showing its share of the image. The strips
+sit still inside their tile, each turned its own few degrees round the
+cylinder's axis, and the tile (preserve-3d) is what moves: one rotateY about
+that same axis carries the whole tile along the arc. A tile is one animation,
+so its strips can never drift apart or show different images. Only a tile's
+delay differs, and that sets where on the arc it sits. The band is
+transform-only, so it stays on the compositor; the fade is a static mask.
+---------------------------------------------------- */
+var REEL_BAND_IMAGES = [
+{ src: "https://res.cloudinary.com/dtzpydtdg/image/upload/f_jpg,q_auto,w_700/v1779219916/IMG-20260518-WA0001_l2i9av.jpg", alt: "Privater Behandlungsraum im Studio" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/video/upload/so_1,f_jpg,q_auto,w_700/v1783541300/ssstik.io_1783540992743_uqjzxu.jpg", alt: "Nail Prep" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/image/upload/f_jpg,q_auto,w_700/v1779219917/IMG-20260428-WA0046_cor7wy.jpg", alt: "Nail Art mit feinen Akzenten" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/image/upload/f_jpg,q_auto,w_700/v1779219918/IMG-20260428-WA0025_edjwsv.jpg", alt: "Wimpernlifting natürlich" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/video/upload/so_1,f_jpg,q_auto,w_700/v1788170943/VID-20260829-WA0000_hm6pqe.jpg", alt: "Blick in das Studio in Uster" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/image/upload/f_jpg,q_auto,w_700/v1779219916/IMG-20260428-WA0059_qimnwk.jpg", alt: "Gellack im Clean-Girl-Look" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/video/upload/so_1,f_jpg,q_auto,w_700/v1783541301/ssstik.io_1783540850005_awzqfj.jpg", alt: "Brow Styling" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/image/upload/f_jpg,q_auto,w_700/v1779219917/IMG-20260428-WA0040_faacey.jpg", alt: "Pediküre mit Fussbad" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/video/upload/so_1,f_jpg,q_auto,w_700/v1783541301/ssstik.io_1783540782266_hc7gr8.jpg", alt: "Lash Lifting" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/image/upload/f_jpg,q_auto,w_700/v1788170969/IMG-20260830-WA0001_cpfd4x.jpg", alt: "Hygiene und Wohlfühlflair" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/video/upload/so_1,f_jpg,q_auto,w_700/v1788170943/VID-20260829-WA0001_jtaroq.jpg", alt: "Spa-Pediküre" },
+{ src: "https://res.cloudinary.com/dtzpydtdg/image/upload/f_jpg,q_auto,w_700/v1779219918/IMG-20260428-WA0019_qf4bkg.jpg", alt: "Brow Lamination und Form" }
+];
+
+function initCurvedBand(root, images, options) {
+if (!root || !images || !images.length) return null;
+var opts = options || {};
+var SLICES = 16;    /* strips per tile; fewer start to show corners */
+var CAMERA = 1.6;   /* camera distance as a multiple of the radius */
+var MAX_WIDTH = 55; /* a tile is never wider than this share of the band */
+
+var speed = opts.speed || 4;
+var tileHeight = opts.tileHeight || 26;
+var aspect = opts.aspectRatio || 16 / 9;
+var gap = opts.gap || 6;
+var axis = typeof opts.axis === 'number' ? opts.axis : 56;
+var fade = typeof opts.fade === 'number' ? opts.fade : 12;
+var curve = typeof opts.curve === 'number' ? opts.curve : 80;
+var bend = (Math.min(85, Math.max(5, curve)) * Math.PI) / 180;
+
+/* Radius, as a share of the band's width, that puts the frame's edge `bend`
+   radians round the arc: r*sin(b) * CAMERA / (CAMERA - 1 + cos(b)) = width/2 */
+function arc(rad) {
+return (CAMERA - 1 + Math.cos(rad)) / (2 * CAMERA * Math.sin(rad));
+}
+
+/* Lays the loop on the cylinder. Angles come back in degrees: `unit` is the
+   arc one tile-height spans, `limit` how far round a tile's centre can go
+   before the whole tile is off-screen, and `sweep` how far round the loop's
+   ends sit. The loop reaches past `limit`, so a tile only ever wraps out of
+   sight, and is rounded up to a whole number of tiles so the gap never
+   stretches. */
+function measure(width, height) {
+var h = Math.min((tileHeight / 100) * height, ((MAX_WIDTH / 100) * width) / aspect);
+var cylRadius = width * arc(bend);
+if (!(h > 0) || !(cylRadius > 0)) return { columns: 2, sweep: 0, unit: 0, limit: 0 };
+var deg = function(rad) { return (rad * 180) / Math.PI; };
+var unit = deg(h / cylRadius);
+var pitch = (aspect + gap / 100) * unit;
+var limit = deg(bend) + (aspect * unit) / 2;
+/* Capped so a band squeezed to a sliver cannot mount thousands of tiles. */
+var columns = Math.min(60, Math.max(2, Math.ceil((2 * limit) / pitch)));
+var round = function(n) { return +n.toFixed(4); };
+var sweep = round((columns * pitch) / 2);
+return { columns: columns, sweep: sweep, unit: round(unit), limit: round(Math.min(sweep, limit)) };
+}
+
+var stage = root.querySelector('.reel-band-stage');
+if (!stage) {
+stage = document.createElement('div');
+stage.className = 'reel-band-stage';
+root.insertBefore(stage, root.firstChild);
+}
+stage.setAttribute('aria-hidden', 'true');
+
+var styleEl = document.createElement('style');
+root.insertBefore(styleEl, root.firstChild);
+
+var orbitName = 'reelOrbit' + Math.random().toString(36).slice(2, 8);
+/* The page stops every animation under prefers-reduced-motion (`animation:
+   none !important`), which would drop every tile back onto the band's centre.
+   So the still is placed by hand instead: same angles, no animation at all. */
+var reduceMotion = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+function prefersReduced() {
+return !!(reduceMotion && reduceMotion.matches);
+}
+var tiles = [];
+var lastKey = null;
+var cylRadius = (100 * arc(bend)).toFixed(3) + 'cqw';
+
+/* Every length is a multiple of the tile's height, which follows the band's
+   height until MAX_WIDTH caps it on narrow screens. */
+function u(n) {
+return 'calc(' + (+n).toFixed(4) + ' * min(' + tileHeight + 'cqh, ' + (MAX_WIDTH / aspect).toFixed(4) + 'cqw))';
+}
+
+/* Out to the axis, round it, back in: a box sits on the cylinder at the
+   angle rotateY gives it. */
+function turn(deg) {
+return 'translateZ(' + cylRadius + ') rotateY(' + (+deg).toFixed(4) + 'deg) translateZ(-' + cylRadius + ')';
+}
+
+/* Fetch every image up front. A tile picks up its next one just before it
+   comes back into view, too late to start loading it then. */
+images.forEach(function(image) {
+var preload = new Image();
+preload.src = image.src;
+});
+
+stage.style.perspective = (100 * arc(bend) * CAMERA).toFixed(3) + 'cqw';
+stage.style.perspectiveOrigin = '50% ' + axis + '%';
+var bandMask = 'linear-gradient(90deg,transparent,#000 ' + fade + '%,#000 ' + (100 - fade) + '%,transparent)';
+stage.style.maskImage = bandMask;
+stage.style.webkitMaskImage = bandMask;
+
+function imageAt(index) {
+return images[((index % images.length) + images.length) % images.length];
+}
+
+function build(next) {
+var columns = next.columns;
+var sweep = next.sweep;
+var unit = next.unit;
+var limit = next.limit;
+/* Beyond `limit` a tile is wholly off-screen, so it is hidden there. The
+   loop's ends, where it wraps, fall inside that stretch. */
+var hide = +(((sweep - limit) / (2 * sweep || 1)) * 100).toFixed(4);
+styleEl.textContent =
+'@keyframes ' + orbitName + '{' +
+'from{transform:' + turn(-sweep) + '}to{transform:' + turn(sweep) + '}' +
+'0%,' + hide + '%,' + (100 - hide) + '%,100%{visibility:hidden}' +
+(hide + 0.001) + '%,' + (100 - hide - 0.001) + '%{visibility:visible}}';
+
+var share = aspect / SLICES;
+var pitch = (aspect + gap / 100) * unit;
+var duration = columns * speed;
+var still = prefersReduced();
+
+stage.innerHTML = '';
+tiles = [];
+
+function applyImage(tile, index) {
+var image = imageAt(index);
+var imgs = tile.querySelectorAll('img');
+for (var i = 0; i < imgs.length; i++) imgs[i].setAttribute('src', image.src);
+}
+
+for (var t = 0; t < columns; t++) {
+/* Tile `columns - 1` starts nearest the exit and tile 0 furthest back, so
+   this numbers tiles in the order they come on. */
+var first = columns - 1 - t;
+var starter = imageAt(first);
+var tile = document.createElement('div');
+tile.className = 'reel-band-tile';
+tile.style.left = 'calc(50% - ' + u(aspect / 2) + ')';
+tile.style.top = 'calc(' + axis + '% - ' + u(0.5) + ')';
+tile.style.width = u(aspect);
+tile.style.height = u(1);
+tile.style.transformStyle = 'preserve-3d';
+/* Tile t starts t tiles along the loop. */
+var startAngle = -sweep + t * pitch;
+if (still) {
+/* Same place the young animation would hold, frozen and cut off past the
+   limit so nothing behind the camera is ever painted. */
+tile.style.transform = turn(startAngle);
+tile.style.visibility = Math.abs(startAngle) <= limit ? 'visible' : 'hidden';
+} else {
+tile.style.animation = orbitName + ' ' + duration + 's linear ' + (-t * speed) + 's infinite';
+}
+
+for (var k = 0; k < SLICES; k++) {
+var slice = document.createElement('div');
+slice.className = 'reel-band-slice' + (k === 0 ? ' reel-band-slice--first' : '') + (k === SLICES - 1 ? ' reel-band-slice--last' : '');
+/* Every strip starts at the tile's centre and is turned round the axis to
+   its own place on the arc. */
+slice.style.left = u((aspect - share) / 2);
+/* A pixel wider than its share, so neighbouring facets overlap and no
+   hairline opens between them. The last has no neighbour to cover. */
+slice.style.width = k === SLICES - 1 ? u(share) : 'calc(' + u(share) + ' + 1px)';
+slice.style.height = u(1);
+slice.style.transform = turn((aspect / 2 - (k + 0.5) * share) * unit);
+
+var img = document.createElement('img');
+img.setAttribute('src', starter.src);
+img.setAttribute('alt', k === 0 ? (starter.alt || '') : '');
+img.setAttribute('draggable', 'false');
+img.setAttribute('decoding', 'async');
+img.style.left = u(-k * share);
+img.style.width = u(aspect);
+img.style.height = u(1);
+slice.appendChild(img);
+tile.appendChild(slice);
+}
+
+var record = { el: tile, first: first, shown: first };
+tile.addEventListener('animationiteration', (function(rec) {
+return function(e) {
+/* elapsedTime counts whole loops, missed events included. */
+var lap = Math.round((e.elapsedTime || 0) / duration);
+var nextIndex = lap * columns + rec.first;
+if (rec.shown === nextIndex) return;
+rec.shown = nextIndex;
+applyImage(rec.el, nextIndex);
+};
+})(record));
+tiles.push(record);
+stage.appendChild(tile);
+}
+stage.classList.add('is-ready');
+}
+
+function applySize(width, height) {
+var next = measure(width, height);
+var key = next.columns + '|' + next.sweep + '|' + next.unit;
+if (key === lastKey) return;
+lastKey = key;
+build(next);
+}
+
+/* The observer sizes the loop; a plain resize listener is the fallback. */
+function remeasure() {
+applySize(root.clientWidth, root.clientHeight);
+}
+applySize(root.clientWidth, root.clientHeight);
+if (typeof ResizeObserver !== 'undefined') {
+new ResizeObserver(function(entries) {
+var rect = entries[0].contentRect;
+applySize(rect.width, rect.height);
+}).observe(root);
+} else {
+window.addEventListener('resize', remeasure, { passive: true });
+}
+/* Honour a change of the system preference without a reload */
+if (reduceMotion && reduceMotion.addEventListener) {
+reduceMotion.addEventListener('change', function() {
+lastKey = null;
+remeasure();
+});
+}
+return { stage: stage, applySize: applySize };
 }
 /* ----------------------------------------------------
 8. Gift Voucher Live Simulator
