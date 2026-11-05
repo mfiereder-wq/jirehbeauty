@@ -995,6 +995,142 @@ column-gap: 0.35rem;
 row-gap: 0.45rem;
 }
 /* ==========================================================================
+3a. WINTER OFFERS (PREISELISTEN IM HOCHFORMAT)
+========================================================================== */
+.winter-offers-section {
+position: relative;
+padding-block: clamp(3.5rem, 7vw, 6rem);
+background: linear-gradient(180deg, rgba(250, 247, 242, 0) 0%, rgba(232, 222, 199, 0.35) 100%);
+overflow: hidden;
+border-bottom: 1px solid var(--border-soft);
+}
+/* Frostiger Gold-Schein hinter den Karten */
+.winter-offers-section::before {
+content: "";
+position: absolute;
+top: -18%;
+left: 50%;
+width: min(820px, 92vw);
+height: 55%;
+transform: translateX(-50%);
+background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+pointer-events: none;
+}
+.winter-offers-header {
+display: grid;
+gap: 0.9rem;
+justify-items: center;
+text-align: center;
+position: relative;
+margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+}
+.winter-kicker {
+font-size: var(--fs-micro);
+font-weight: 700;
+letter-spacing: 0.26em;
+text-transform: uppercase;
+color: var(--gold-deep);
+}
+.winter-offers-header h2 {
+font-size: clamp(2rem, 1.3rem + 3vw, 3.4rem);
+}
+.winter-offers-header .lead {
+max-width: 48ch;
+margin-inline: auto;
+}
+.winter-grid {
+display: grid;
+grid-template-columns: 1fr;
+gap: 1.75rem;
+max-width: 62rem;
+margin-inline: auto;
+position: relative;
+}
+@media (min-width: 760px) {
+.winter-grid {
+grid-template-columns: 1fr 1fr;
+align-items: start;
+}
+}
+.winter-card {
+background: #FFFFFF;
+border: 1px solid var(--border-hairline);
+border-radius: var(--radius-md);
+overflow: hidden;
+padding: 0.6rem;
+box-shadow: var(--shadow-subtle);
+transition: all var(--transition-smooth);
+cursor: zoom-in;
+display: block;
+width: 100%;
+text-align: inherit;
+}
+.winter-card:hover {
+transform: translateY(-5px);
+border-color: var(--gold);
+box-shadow: var(--shadow-hover);
+}
+.winter-card-img {
+position: relative;
+border-radius: var(--radius-sm);
+overflow: hidden;
+aspect-ratio: 2 / 3;
+background: var(--bg-surface);
+}
+.winter-card-img img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+object-position: top center;
+transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.winter-card:hover .winter-card-img img {
+transform: scale(1.03);
+}
+.winter-card-zoom-hint {
+position: absolute;
+top: 12px;
+right: 12px;
+background: rgba(28, 24, 21, 0.82);
+backdrop-filter: blur(8px);
+color: var(--gold-light);
+font-size: 0.72rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+padding: 4px 12px;
+border-radius: var(--radius-pill);
+}
+.winter-card-caption {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 0.75rem;
+padding: 0.9rem 0.5rem 0.45rem;
+}
+.winter-card-caption strong {
+font-family: var(--font-serif);
+font-weight: 400;
+font-size: 1.05rem;
+color: var(--ink-primary);
+}
+.winter-card-caption span {
+font-size: var(--fs-micro);
+font-weight: 600;
+letter-spacing: 0.16em;
+text-transform: uppercase;
+color: var(--gold-deep);
+white-space: nowrap;
+}
+.winter-offers-cta {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: center;
+gap: 1rem;
+margin-top: clamp(2rem, 4vw, 2.75rem);
+position: relative;
+}
+/* ==========================================================================
 3b. STUDIO TOUR VIDEO (CINEMATIC 16:9)
 ========================================================================== */
 .studio-tour-section {
@@ -2855,6 +2991,49 @@ Maniküre, Pediküre, langlebige Kunstnägel, Wimpernverlängerung & Brow Lamina
 <p class="hero-services-row" aria-label="Leistungen im Studio">
 <span class="hero-services-item">Maniküre</span><span class="hero-services-dot" aria-hidden="true">✦</span><span class="hero-services-item">Pediküre</span><span class="hero-services-dot" aria-hidden="true">✦</span><span class="hero-services-item">Kunstnägel</span><span class="hero-services-dot" aria-hidden="true">✦</span><span class="hero-services-item">Lash Lifting</span><span class="hero-services-dot" aria-hidden="true">✦</span><span class="hero-services-item">Wimpernverlängerung</span><span class="hero-services-dot" aria-hidden="true">✦</span><span class="hero-services-item">Brow Lamination</span><span class="hero-services-dot" aria-hidden="true">✦</span><span class="hero-services-item">Spa-Pediküre</span><span class="hero-services-dot" aria-hidden="true">✦</span><span class="hero-services-item">Nail Art</span>
 </p>
+</div>
+</div>
+</section>
+<!-- ==================== WINTER-ANGEBOTE (PREISELISTEN) ==================== -->
+<section class="winter-offers-section" id="winterangebote" aria-label="Winterangebote – Preislisten">
+<div class="container">
+<div class="winter-offers-header">
+<div class="winter-kicker">Saisonale Angebote · Winter 2026</div>
+<h2>Winterangebote &amp; <em>Preislisten</em></h2>
+<p class="lead">
+Wärmende Behandlungen, wohlige Zusätze und limitierte Winter-Sets — alle Preise auf einen Blick. Anklicken zum Vergrössern.
+</p>
+</div>
+<div class="winter-grid">
+<button class="winter-card" type="button" onclick="openLightbox('https://res.cloudinary.com/dnrvauviq/image/upload/f_auto,q_auto,w_1400/v1793910968/1793909687061_3_sc1uix.jpg', 'Winterangebote – Preisliste Seite 1')" aria-label="Preisliste Winterangebote Seite 1 vergrössern">
+<div class="winter-card-img">
+<img src="https://res.cloudinary.com/dnrvauviq/image/upload/f_auto,q_auto,w_800/v1793910968/1793909687061_3_sc1uix.jpg" alt="Preisliste Winterangebote des Jireh Beauty Studio by Belky in Uster – Seite 1" loading="lazy" decoding="async" />
+<span class="winter-card-zoom-hint" aria-hidden="true">Vergrössern ⤢</span>
+</div>
+<div class="winter-card-caption">
+<strong>Winterangebote</strong>
+<span>Preisliste · Seite 1</span>
+</div>
+</button>
+<button class="winter-card" type="button" onclick="openLightbox('https://res.cloudinary.com/dnrvauviq/image/upload/f_auto,q_auto,w_1400/v1793910969/1793909687061_2_rfxddr.jpg', 'Winterangebote – Preisliste Seite 2')" aria-label="Preisliste Winterangebote Seite 2 vergrössern">
+<div class="winter-card-img">
+<img src="https://res.cloudinary.com/dnrvauviq/image/upload/f_auto,q_auto,w_800/v1793910969/1793909687061_2_rfxddr.jpg" alt="Preisliste Winterangebote des Jireh Beauty Studio by Belky in Uster – Seite 2" loading="lazy" decoding="async" />
+<span class="winter-card-zoom-hint" aria-hidden="true">Vergrössern ⤢</span>
+</div>
+<div class="winter-card-caption">
+<strong>Winterangebote</strong>
+<span>Preisliste · Seite 2</span>
+</div>
+</button>
+</div>
+<div class="winter-offers-cta">
+<a class="btn-luxury btn-gold" href="https://buchung.treatwell.ch/ort/jireh-beauty-studio-by-belky/" target="_blank" rel="noopener">
+<span>Wintertermin buchen</span>
+<span class="arrow-icon">→</span>
+</a>
+<a class="btn-outline" href="https://wa.me/41772216088" target="_blank" rel="noopener">
+<span>Fragen via WhatsApp</span>
+</a>
 </div>
 </div>
 </section>
